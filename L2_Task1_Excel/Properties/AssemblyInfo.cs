@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CsharpServer")]
+[assembly: AssemblyTitle("L2_Task1_Excel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CsharpServer")]
+[assembly: AssemblyProduct("L2_Task1_Excel")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b24c6091-020a-4cc1-9a4d-9abf6a8b422e")]
+[assembly: Guid("99454adb-c343-4246-8782-3f03e8204884")]
 
 // Version information for an assembly consists of the following four values:
 //
