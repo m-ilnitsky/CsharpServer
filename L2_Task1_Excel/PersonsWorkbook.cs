@@ -4,11 +4,13 @@ using OfficeOpenXml;
 
 namespace L2_Task1_Excel
 {
-    public class PersonsWorkbook
+    public class PersonsWorkbook : IDisposable
     {
         private readonly ExcelPackage _package;
         private readonly ExcelWorkbook _workbook;
         private readonly ExcelWorksheet _worksheet;
+
+        private bool _disposed;
 
         public PersonsWorkbook(Person[] persons)
         {
@@ -32,6 +34,32 @@ namespace L2_Task1_Excel
                 _worksheet.Cells[row, 4].Value = persons[i].Phone;
                 _worksheet.Cells[row, 5].Value = persons[i].Age;
             }
+        }
+
+        ~PersonsWorkbook()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _package.Dispose();
+            }
+
+            _disposed = true;
         }
 
         public ExcelPackage GetPackage()
