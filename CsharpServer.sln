@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L2_Task1_Excel", "L2_Task1_Excel\L2_Task1_Excel.csproj", "{99454ADB-C343-4246-8782-3F03E8204884}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L2_Task2_JSON", "L2_Task2_JSON\L2_Task2_JSON.csproj", "{B9FF5148-DE09-4A51-BF55-C9169C564AA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{99454ADB-C343-4246-8782-3F03E8204884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99454ADB-C343-4246-8782-3F03E8204884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99454ADB-C343-4246-8782-3F03E8204884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FF5148-DE09-4A51-BF55-C9169C564AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FF5148-DE09-4A51-BF55-C9169C564AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FF5148-DE09-4A51-BF55-C9169C564AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FF5148-DE09-4A51-BF55-C9169C564AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
