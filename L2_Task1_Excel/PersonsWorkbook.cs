@@ -20,7 +20,9 @@ namespace L2_Task1_Excel
 
         private bool _disposed;
 
-        public PersonsWorkbook(Person[] persons) : this(persons, 1, 1) { }
+        public PersonsWorkbook(Person[] persons) : this(persons, 1, 1)
+        {
+        }
 
         public PersonsWorkbook(Person[] persons, int leftCell, int topCell)
         {
@@ -35,17 +37,17 @@ namespace L2_Task1_Excel
             _worksheet = _package.Workbook.Worksheets.Add("Persons");
 
             _worksheet.Cells[_headerRow, leftCell].Value = "ID";
-            _worksheet.Cells[_headerRow, leftCell + 1].Value = "Family";
-            _worksheet.Cells[_headerRow, leftCell + 2].Value = "Name";
-            _worksheet.Cells[_headerRow, leftCell + 3].Value = "Phone";
-            _worksheet.Cells[_headerRow, leftCell + 4].Value = "Age";
+            _worksheet.Cells[_headerRow, leftCell + 1].Value = "Фамилия";
+            _worksheet.Cells[_headerRow, leftCell + 2].Value = "Имя";
+            _worksheet.Cells[_headerRow, leftCell + 3].Value = "Телефон";
+            _worksheet.Cells[_headerRow, leftCell + 4].Value = "Возраст";
 
             for (var i = 0; i < persons.Length; ++i)
             {
                 var row = _topBodyRow + i;
 
                 _worksheet.Cells[row, leftCell].Value = i;
-                _worksheet.Cells[row, leftCell + 1].Value = persons[i].Family;
+                _worksheet.Cells[row, leftCell + 1].Value = persons[i].Surname;
                 _worksheet.Cells[row, leftCell + 2].Value = persons[i].Name;
                 _worksheet.Cells[row, leftCell + 3].Value = persons[i].Phone;
                 _worksheet.Cells[row, leftCell + 4].Value = persons[i].Age;
