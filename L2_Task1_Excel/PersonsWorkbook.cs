@@ -165,6 +165,7 @@ namespace L2_Task1_Excel
             _worksheet.View.PageLayoutView = pageLayoutView;
         }
 
+        /* // Полный Dispose pattern
         ~PersonsWorkbook()
         {
             Dispose(false);
@@ -189,6 +190,11 @@ namespace L2_Task1_Excel
             }
 
             _disposed = true;
+        }*/
+
+        public void Dispose()
+        {
+            _package.Dispose();
         }
 
         public ExcelPackage GetPackage()
