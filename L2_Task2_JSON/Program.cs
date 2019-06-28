@@ -18,8 +18,6 @@ namespace L2_Task2_JSON
                 var jsonString = reader.ReadToEnd();
                 var countries = JsonConvert.DeserializeObject<List<Country>>(jsonString);
 
-                var currenciesSet = new HashSet<Currency>();
-
                 Console.WriteLine("Список стран:");
 
                 var count = 0;
@@ -38,8 +36,6 @@ namespace L2_Task2_JSON
                         {
                             Console.Write(",  ");
                         }
-
-                        currenciesSet.Add(country.Currencies[i]);
                     }
 
                     Console.WriteLine("]");
