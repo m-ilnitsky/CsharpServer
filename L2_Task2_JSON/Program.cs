@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using Newtonsoft.Json;
 
@@ -26,7 +27,8 @@ namespace L2_Task2_JSON
 
                 foreach (var country in countries)
                 {
-                    Console.Write("{0,2}. Страна: {1},  Население(чел.): {2},  Валюты: [", ++count, country.Name, country.Population);
+                    ++count;
+                    Console.Write("{0,2}. Страна: {1},  Население(чел.): {2},  Валюты: [", count, country.Name, country.Population);
 
                     for (var i = 0; i < country.Currencies.Count; ++i)
                     {
@@ -48,23 +50,19 @@ namespace L2_Task2_JSON
                 Console.WriteLine();
                 Console.WriteLine("Суммарная численность населения (мил.чел.): {0}", totalPopulation / 1000000);
 
-                var currenciesList = new List<Currency>(currenciesSet);
-                currenciesList.Sort((currency1, currency2) =>
-                {
-                    if (currency1.Name == null && currency2.Name == null) return 0;
-                    if (currency1.Name == null) return -1;
-                    if (currency2.Name == null) return 1;
-
-                    return currency1.Name.CompareTo(currency2.Name);
-                });
+                var currencies = countries
+                    .SelectMany(country => country.Currencies)
+                    .GroupBy(currency => currency.Code, (code, currenciesGroup) => currenciesGroup.First())
+                    .OrderBy(currency => currency.Code);
 
                 Console.WriteLine();
                 Console.WriteLine("Набор валют:");
 
                 count = 0;
-                foreach (var currency in currenciesList)
+                foreach (var currency in currencies)
                 {
-                    Console.WriteLine("{0,2}. Название: {1,-30}    Код:{2,6}    Символ: {3}", ++count, currency.Name, currency.Code, currency.Symbol);
+                    ++count;
+                    Console.WriteLine("{0,2}. Название: {1,-30}    Код:{2,6}    Символ: {3}", count, currency.Name, currency.Code, currency.Symbol);
                 }
 
                 Console.ReadKey();
