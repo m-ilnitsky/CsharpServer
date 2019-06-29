@@ -58,6 +58,8 @@ namespace L2_Task1_Excel
 
         public void SetProperties(string name, string title, string author, string company, string comments)
         {
+            CheckDisposed();
+
             _worksheet.Name = name;
 
             _worksheet.HeaderFooter.OddHeader.CenteredText = "&24&U&\"Arial,Regular Bold\"" + title;
@@ -73,12 +75,15 @@ namespace L2_Task1_Excel
 
         public void SetDefaultStyle(Color color)
         {
+            CheckDisposed();
             SetBodyStyle(Color.White, Color.LightGray, color);
             SetHeaderStyle(color, Color.White);
         }
 
         public void SetHeaderStyle(Color backgroundColor, Color color)
         {
+            CheckDisposed();
+
             using (var range = _worksheet.Cells[_headerRow, _leftColumn, _headerRow, _rightColumn])
             {
                 range.Style.Font.Bold = true;
@@ -97,6 +102,8 @@ namespace L2_Task1_Excel
 
         public void SetBodyStyle(Color backgroundColor1, Color backgroundColor2, Color color)
         {
+            CheckDisposed();
+
             using (var range = _worksheet.Cells[_topBodyRow, _leftColumn, _bottomBodyRow, _rightColumn])
             {
                 range.Style.Font.Bold = false;
@@ -135,6 +142,8 @@ namespace L2_Task1_Excel
 
         public void SetTableBorder(ExcelBorderStyle borderStyle, Color color)
         {
+            CheckDisposed();
+
             using (var range = _worksheet.Cells[_headerRow, _leftColumn, _headerRow, _rightColumn])
             {
                 range.Style.Border.Top.Style = borderStyle;
@@ -162,7 +171,41 @@ namespace L2_Task1_Excel
 
         public void SetPageLayoutView(bool pageLayoutView)
         {
+            CheckDisposed();
             _worksheet.View.PageLayoutView = pageLayoutView;
+        }
+
+        public ExcelPackage GetPackage()
+        {
+            CheckDisposed();
+            return _package;
+        }
+
+        public ExcelWorkbook GetWorkbook()
+        {
+            CheckDisposed();
+            return _workbook;
+        }
+
+        public ExcelWorksheet GetWorksheet()
+        {
+            CheckDisposed();
+            return _worksheet;
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            CheckDisposed();
+
+            try
+            {
+                var file = new FileInfo(fileName);
+                _package.SaveAs(file);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.Message);
+            }
         }
 
         /* // Полный Dispose pattern
@@ -203,31 +246,11 @@ namespace L2_Task1_Excel
             _disposed = true;
         }
 
-        public ExcelPackage GetPackage()
+        private void CheckDisposed()
         {
-            return _package;
-        }
-
-        public ExcelWorkbook GetWorkbook()
-        {
-            return _workbook;
-        }
-
-        public ExcelWorksheet GetWorksheet()
-        {
-            return _worksheet;
-        }
-
-        public void SaveToFile(string fileName)
-        {
-            try
+            if (_disposed)
             {
-                var file = new FileInfo(fileName);
-                _package.SaveAs(file);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The process failed: {0}", e.Message);
+                throw new ObjectDisposedException("PersonsWorkbook: _disposed == true");
             }
         }
     }
