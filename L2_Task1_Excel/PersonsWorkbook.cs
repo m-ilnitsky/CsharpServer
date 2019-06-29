@@ -194,7 +194,13 @@ namespace L2_Task1_Excel
 
         public void Dispose()
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             _package.Dispose();
+            _disposed = true;
         }
 
         public ExcelPackage GetPackage()
