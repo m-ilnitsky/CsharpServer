@@ -9,36 +9,35 @@ namespace L3_Task1_ADO_NET
     {
         private static int GetGoodsCount(SqlConnection connection)
         {
-            const string sql = "SELECT COUNT([Name]) FROM [Goods]";
-
-            int count;
+            const string sql = @"SELECT COUNT([Name])
+                                 FROM [Goods]";
 
             using (var command = new SqlCommand(sql, connection))
             {
-                count = (int)command.ExecuteScalar();
+                return (int)command.ExecuteScalar();
             }
-
-            return count;
         }
 
         private static int GetGoodsCount(SqlConnection connection, string category)
         {
-            const string sql = "SELECT COUNT([Goods].[Name]) FROM [Goods], [Category] WHERE [Category].[Name]=@CategoryName AND [Category].[ID]=[Goods].[CategoryID]";
-
-            int count;
+            const string sql = @"SELECT COUNT([Goods].[Name]) 
+                                 FROM [Goods]
+                                 INNER JOIN [Category]
+                                 ON [Category].[Name] = @CategoryName AND [Category].[ID] = [Goods].[CategoryID]";
 
             using (var command = new SqlCommand(sql, connection))
             {
                 command.Parameters.Add(new SqlParameter("@CategoryName", category) { SqlDbType = SqlDbType.NVarChar });
-                count = (int)command.ExecuteScalar();
+                return (int)command.ExecuteScalar();
             }
-
-            return count;
         }
 
         private static void PrintAllGoodsByReader(SqlConnection connection)
         {
-            const string sql = "SELECT [Goods].[Name], [Goods].[Price], [Category].[Name] AS Category FROM [Goods], [Category] WHERE [Category].[ID]=[Goods].[CategoryID]";
+            const string sql = @"SELECT [Goods].[Name], [Goods].[Price], [Category].[Name] AS Category 
+                                 FROM [Goods]
+                                 LEFT JOIN [Category] 
+                                 ON [Category].[ID] = [Goods].[CategoryID]";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -61,7 +60,10 @@ namespace L3_Task1_ADO_NET
 
         private static void PrintAllGoodsByAdapter(SqlConnection connection)
         {
-            const string sql = "SELECT [Goods].[Name], [Goods].[Price], [Category].[Name] AS Category FROM [Goods], [Category] WHERE [Category].[ID]=[Goods].[CategoryID]";
+            const string sql = @"SELECT [Goods].[Name], [Goods].[Price], [Category].[Name] AS Category 
+                                 FROM [Goods]
+                                 LEFT JOIN [Category] 
+                                 ON [Category].[ID] = [Goods].[CategoryID]";
 
             using (var adapter = new SqlDataAdapter(sql, connection))
             {
@@ -94,9 +96,11 @@ namespace L3_Task1_ADO_NET
             }
         }
 
-        private static bool IsCategory(SqlConnection connection, string categoryName)
+        private static bool HasCategory(SqlConnection connection, string categoryName)
         {
-            const string sql = "SELECT COUNT([Category].[ID]) FROM [Category] WHERE [Category].[Name]=@CategoryName";
+            const string sql = @"SELECT COUNT([Category].[ID]) 
+                                 FROM [Category] 
+                                 WHERE [Category].[Name] = @CategoryName";
 
             int count;
 
@@ -116,9 +120,9 @@ namespace L3_Task1_ADO_NET
 
         private static int GetCategoryId(SqlConnection connection, string categoryName)
         {
-            const string sql = "SELECT [Category].[ID] FROM [Category] WHERE [Category].[Name]=@CategoryName";
-
-            int id;
+            const string sql = @"SELECT [Category].[ID] 
+                                 FROM [Category] 
+                                 WHERE [Category].[Name] = @CategoryName";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -128,21 +132,20 @@ namespace L3_Task1_ADO_NET
                 {
                     reader.Read();
 
-                    id = reader.GetInt32(0);
+                    return reader.GetInt32(0);
                 }
             }
-
-            return id;
         }
 
         private static void AddCategory(SqlConnection connection, string categoryName)
         {
-            if (IsCategory(connection, categoryName))
+            if (HasCategory(connection, categoryName))
             {
                 throw new Exception("Category '" + categoryName + "' already exists!");
             }
 
-            const string sql = "INSERT INTO [BookShop].[dbo].[Category] ([Name]) VALUES (@CategoryName)";
+            const string sql = @"INSERT INTO [BookShop].[dbo].[Category] ([Name]) 
+                                 VALUES (@CategoryName)";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -153,14 +156,15 @@ namespace L3_Task1_ADO_NET
 
         private static void AddGoods(SqlConnection connection, string categoryName, string goodsName, decimal price)
         {
-            if (!IsCategory(connection, categoryName))
+            if (!HasCategory(connection, categoryName))
             {
                 throw new Exception("No category '" + categoryName + "'!");
             }
 
             var categoryId = GetCategoryId(connection, categoryName);
 
-            const string sql = "INSERT INTO [BookShop].[dbo].[Goods] ([Name], [Price], [CategoryID]) VALUES(@GoodsName, @Price, @CategoryId)";
+            const string sql = @"INSERT INTO [BookShop].[dbo].[Goods] ([Name], [Price], [CategoryID]) 
+                                 VALUES(@GoodsName, @Price, @CategoryId)";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -173,7 +177,13 @@ namespace L3_Task1_ADO_NET
 
         private static int[] GetGoodsId(SqlConnection connection, string categoryName, string goodsName, decimal price)
         {
-            const string sql = "SELECT [Goods].[ID] FROM [Goods], [Category] WHERE [Category].[ID]=[Goods].[CategoryID] AND [Category].[Name]=@CategoryName AND [Goods].[Name]=@GoodsName AND [Goods].[Price]=@Price";
+            const string sql = @"SELECT [Goods].[ID] 
+                                 FROM [Goods]
+                                 INNER JOIN [Category] 
+                                 ON [Category].[ID] = [Goods].[CategoryID] 
+                                    AND [Category].[Name] = @CategoryName 
+                                    AND [Goods].[Name] = @GoodsName 
+                                    AND [Goods].[Price] = @Price";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -204,7 +214,8 @@ namespace L3_Task1_ADO_NET
 
         private static void DeleteGoods(SqlConnection connection, int goodsId)
         {
-            const string sql = "DELETE FROM [BookShop].[dbo].[Goods] WHERE [Goods].[ID]=@GoodsId";
+            const string sql = @"DELETE FROM [BookShop].[dbo].[Goods] 
+                                 WHERE [Goods].[ID] = @GoodsId";
 
             using (var command = new SqlCommand(sql, connection))
             {
@@ -282,26 +293,26 @@ namespace L3_Task1_ADO_NET
             var sqlCategory = "";
             if (currentCategoryName != newCategoryName)
             {
-                if (!IsCategory(connection, newCategoryName))
+                if (!HasCategory(connection, newCategoryName))
                 {
                     throw new Exception("No category '" + newCategoryName + "'!");
                 }
 
                 categoryId = GetCategoryId(connection, newCategoryName);
 
-                sqlCategory = "[Goods].[CategoryID]=@CategoryID";
+                sqlCategory = "[Goods].[CategoryID] = @CategoryID";
             }
 
             var sqlName = "";
             if (currentGoodsName != newGoodsName)
             {
-                sqlName = "[Goods].[Name]=@Name";
+                sqlName = "[Goods].[Name] = @Name";
             }
 
             var sqlPrice = "";
             if (currentPrice != newPrice)
             {
-                sqlPrice = "[Goods].[Price]=@Price";
+                sqlPrice = "[Goods].[Price] = @Price";
             }
 
             var sqlWhere = " WHERE [Goods].[ID] ";
@@ -373,7 +384,6 @@ namespace L3_Task1_ADO_NET
 
                 PrintAllGoodsByAdapter(connection);
                 PrintAllGoodsByReader(connection);
-
 
                 AddCategory(connection, "ручка");
                 AddCategory(connection, "карандаш");
