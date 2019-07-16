@@ -9,16 +9,12 @@ namespace L4_Task1_Shop_EF
 {
     public class Customer
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Surname { get; set; }
 
-        [Required]
         public string Phone { get; set; }
 
         public string Mail { get; set; }

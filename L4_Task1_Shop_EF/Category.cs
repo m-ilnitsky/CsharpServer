@@ -9,13 +9,11 @@ namespace L4_Task1_Shop_EF
 {
     public class Category
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Product> Product { get; set; } = new List<Product>();
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 
         public override string ToString()
         {

@@ -10,26 +10,21 @@ namespace L4_Task1_Shop_EF
 {
     public class Product
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public decimal Price { get; set; }
 
-        public int[] CategoryIds { get; set; }
-
-        public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,3} Name: {1, 10}  Price: {2, 8}  Categories:[", Id, Name, Price);
+            stringBuilder.AppendFormat("Id:{0,3} Name: {1, 10}  Price: {2, 8}", Id, Name, Price);
 
-            if (Categories.Count > 0)
+            /*if (Categories.Count > 0)
             {
                 foreach (var category in Categories)
                 {
@@ -39,7 +34,7 @@ namespace L4_Task1_Shop_EF
                 stringBuilder.Remove(stringBuilder.Length - 2, 2);
             }
 
-            stringBuilder.Append("]");
+            stringBuilder.Append("]");*/
 
             return base.ToString();
         }
