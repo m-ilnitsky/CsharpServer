@@ -22,7 +22,7 @@ namespace L4_Task1_Shop_EF
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,3} Name: {1, 10}  Price: {2, 8}", Id, Name, Price);
+            stringBuilder.AppendFormat("Id:{0,3} Name: {1, 30}  Price: {2, 8}", Id, Name, Price);
 
             /*if (Categories.Count > 0)
             {
@@ -36,7 +36,7 @@ namespace L4_Task1_Shop_EF
 
             stringBuilder.Append("]");*/
 
-            return base.ToString();
+            return stringBuilder.ToString();
         }
     }
 }

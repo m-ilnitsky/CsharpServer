@@ -15,15 +15,13 @@ namespace L4_Task1_Shop_EF
                 bookShop.AddCategories(new List<string> { "книга", "журнал", "газета", "блокнот", "календарь", "карандаши", "ручки", "фломастеры" });
                 bookShop.PrintCategories();
 
-                bookShop.AddProducts(new List<Product>
-                {
-                    new Product{Name = "Газетный журнал", Price=100, Categories = new List<Category>{new Category{Name = "газета"}, new Category{Name="журнал"}}},
-                    new Product{Name = "Журнальная газетёнка", Price = 150, Categories = new List<Category>{new Category{Name = "газета"}, new Category{Name="журнал"}}},
-                    new Product{Name = "Питер Таймс", Price = 250, Categories = new List<Category>{new Category{Name = "газета"}}},
-                    new Product{Name = "Питер Пост", Price = 250, Categories = new List<Category>{new Category{Name = "журнал"}}},
-                    new Product{Name = "Корея сегодня", Price = 550, Categories = new List<Category>{new Category{Name = "газета"}, new Category{Name="журнал"}}}
-                });
+                var product1 = bookShop.GetOrCreateProduct("Газетный журнал", 100, new string[] { "газета", "журнал" });
+                var product2 = bookShop.GetOrCreateProduct("Журнальная газетёнка", 150, new string[] { "газета", "журнал" });
+                var product3 = bookShop.GetOrCreateProduct("Питер Таймс", 250, new string[] { "газета" });
+                var product4 = bookShop.GetOrCreateProduct("Питер Пост", 250, new string[] { "журнал" });
+                var product5 = bookShop.GetOrCreateProduct("Корея сегодня", 550, new string[] { "журнал" });
                 bookShop.PrintProducts();
+                bookShop.PrintProductCategories();
 
                 bookShop.AddCustomers(new List<Customer>
                 {
@@ -34,6 +32,7 @@ namespace L4_Task1_Shop_EF
                     new Customer{Name = "Юля", Surname = "Июля", Phone = "555-55-55", Mail = "nado-nebo@neba.net"}
                 });
                 bookShop.PrintCustomers();
+
             }
 
             Console.ReadKey();

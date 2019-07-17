@@ -40,6 +40,9 @@ namespace L4_Task1_Shop_EF
         {
             var categories = _db.Categories.ToArray();
 
+            Console.WriteLine();
+            Console.WriteLine("Categories:");
+
             foreach (var category in categories)
             {
                 Console.WriteLine(category);
@@ -50,9 +53,25 @@ namespace L4_Task1_Shop_EF
         {
             var products = _db.Products.ToArray();
 
+            Console.WriteLine();
+            Console.WriteLine("Products:");
+
             foreach (var product in products)
             {
                 Console.WriteLine(product);
+            }
+        }
+
+        public void PrintProductCategories()
+        {
+            var productCategories = _db.ProductCategories.ToArray();
+
+            Console.WriteLine();
+            Console.WriteLine("ProductCategories:");
+
+            foreach (var productCategory in productCategories)
+            {
+                Console.WriteLine(productCategory);
             }
         }
 
@@ -60,30 +79,63 @@ namespace L4_Task1_Shop_EF
         {
             var customers = _db.Customers.ToArray();
 
+            Console.WriteLine();
+            Console.WriteLine("Customers:");
+
             foreach (var customer in customers)
             {
                 Console.WriteLine(customer);
             }
         }
 
+        public Category GetOrCreateCategory(string categoryName)
+        {
+            var category = _db.Categories.FirstOrDefault(c => c.Name == categoryName);
+
+            if (category == null)
+            {
+                category = new Category() { Name = categoryName };
+                _db.Categories.Add(category);
+                _db.SaveChanges();
+            }
+
+            return category;
+        }
+
+        public Product GetOrCreateProduct(string name, decimal price, string[] categoryNames)
+        {
+            var product = _db.Products.FirstOrDefault(c => c.Name == name);
+
+            if (product == null)
+            {
+                product = new Product() { Name = name, Price = price };
+
+                _db.Products.Add(product);
+
+                var categories = new Category[categoryNames.Length];
+                var productCategories = new ProductCategory[categoryNames.Length];
+
+                for (var i = 0; i < categoryNames.Length; i++)
+                {
+                    categories[i] = GetOrCreateCategory(categoryNames[i]);
+
+
+                    productCategories[i] = new ProductCategory() { ProductId = product.Id, CategoryId = categories[i].Id };
+                    _db.ProductCategories.Add(productCategories[i]);
+                }
+
+                _db.SaveChanges();
+            }
+
+            return product;
+        }
+
         public void AddCategories(ICollection<string> categoryNames)
         {
             foreach (var name in categoryNames)
             {
-                _db.Categories.Add(new Category { Name = name });
+                GetOrCreateCategory(name);
             }
-
-            _db.SaveChanges();
-        }
-
-        public void AddProducts(ICollection<Product> products)
-        {
-            foreach (var product in products)
-            {
-                _db.Products.Add(product);
-            }
-
-            _db.SaveChanges();
         }
 
         public void AddCustomers(ICollection<Customer> customers)

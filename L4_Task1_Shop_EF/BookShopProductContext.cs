@@ -27,7 +27,6 @@ namespace L4_Task1_Shop_EF
         {
             //modelBuilder.Entity<Category>().HasKey(c => c.Id);
             modelBuilder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(50);
-            //modelBuilder.Entity<Category>().HasRequired(c=>c.ProductCategories).WithMany(p=>p.CategoryId)
 
             //modelBuilder.Entity<Product>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(50);
@@ -36,6 +35,12 @@ namespace L4_Task1_Shop_EF
             //modelBuilder.Entity<ProductCategory>().HasKey(p => p.Id);
             modelBuilder.Entity<ProductCategory>().Property(p => p.ProductId).IsRequired();
             modelBuilder.Entity<ProductCategory>().Property(p => p.CategoryId).IsRequired();
+            modelBuilder.Entity<ProductCategory>().HasRequired(pc => pc.Product)
+                .WithMany(p => p.ProductCategories)
+                .HasForeignKey(pc => pc.ProductId);
+            modelBuilder.Entity<ProductCategory>().HasRequired(pc => pc.Category)
+                .WithMany(c => c.ProductCategories)
+                .HasForeignKey(pc => pc.CategoryId);
 
             modelBuilder.Entity<Customer>().HasKey(c => c.Id);
             modelBuilder.Entity<Customer>().Property(c => c.Name).IsRequired().HasMaxLength(50);
