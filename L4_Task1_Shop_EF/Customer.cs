@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace L4_Task1_Shop_EF
 {
@@ -18,6 +14,8 @@ namespace L4_Task1_Shop_EF
         public string Phone { get; set; }
 
         public string Mail { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
         public override string ToString()
         {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace L4_Task1_Shop_EF
 {
@@ -88,6 +86,19 @@ namespace L4_Task1_Shop_EF
             }
         }
 
+        public void PrintOrders()
+        {
+            var orders = _db.Orders.ToArray();
+
+            Console.WriteLine();
+            Console.WriteLine("Orders:");
+
+            foreach (var order in orders)
+            {
+                Console.WriteLine(order);
+            }
+        }
+
         public Category GetOrCreateCategory(string categoryName)
         {
             var category = _db.Categories.FirstOrDefault(c => c.Name == categoryName);
@@ -100,6 +111,14 @@ namespace L4_Task1_Shop_EF
             }
 
             return category;
+        }
+
+        public void AddCategories(ICollection<string> categoryNames)
+        {
+            foreach (var name in categoryNames)
+            {
+                GetOrCreateCategory(name);
+            }
         }
 
         public Product GetOrCreateProduct(string name, decimal price, string[] categoryNames)
@@ -130,27 +149,40 @@ namespace L4_Task1_Shop_EF
             return product;
         }
 
-        public void AddCategories(ICollection<string> categoryNames)
+        public Customer GetOrCreateCustomer(string name, string surname, string phone, string mail)
         {
-            foreach (var name in categoryNames)
+            var customer = _db.Customers.FirstOrDefault(c => c.Name == name && c.Surname == surname);
+
+            if (customer == null)
             {
-                GetOrCreateCategory(name);
+                customer = new Customer { Name = name, Surname = surname, Phone = phone, Mail = mail };
+
+                _db.Customers.Add(customer);
+                _db.SaveChanges();
             }
+
+            return customer;
         }
 
         public void AddCustomers(ICollection<Customer> customers)
         {
             foreach (var customer in customers)
             {
-                _db.Customers.Add(customer);
+                GetOrCreateCustomer(customer.Name, customer.Surname, customer.Phone, customer.Mail);
             }
-
-            _db.SaveChanges();
         }
 
-        public void AddOrder(Customer customer, ICollection<Product> products)
+        public void AddOrder(Customer customer, ICollection<ProductOrder> productOrders)
         {
-            _db.Orders.Add(new Order { CustomerId = customer.Id, ProductIds = products.Select(product => product.Id).ToArray() });
+            var order = new Order { CustomerId = customer.Id, Date = DateTime.Now };
+            _db.Orders.Add(order);
+
+            foreach (var productOrder in productOrders)
+            {
+                productOrder.OrderId = order.Id;
+                _db.ProductOrders.Add(productOrder);
+            }
+
             _db.SaveChanges();
         }
     }

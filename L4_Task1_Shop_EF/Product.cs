@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace L4_Task1_Shop_EF
 {
@@ -18,23 +13,25 @@ namespace L4_Task1_Shop_EF
 
         public virtual ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
+
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,3} Name: {1, 30}  Price: {2, 8}", Id, Name, Price);
+            stringBuilder.AppendFormat("Id:{0,3} Name: {1,-30}   Price: {2, 8}   Categories: [", Id, Name, Price);
 
-            /*if (Categories.Count > 0)
+            if (ProductCategories.Count > 0)
             {
-                foreach (var category in Categories)
+                foreach (var pc in ProductCategories)
                 {
-                    stringBuilder.Append(category.Name + ", ");
+                    stringBuilder.Append(pc.Category.Name + ", ");
                 }
 
                 stringBuilder.Remove(stringBuilder.Length - 2, 2);
             }
 
-            stringBuilder.Append("]");*/
+            stringBuilder.Append("]");
 
             return stringBuilder.ToString();
         }
