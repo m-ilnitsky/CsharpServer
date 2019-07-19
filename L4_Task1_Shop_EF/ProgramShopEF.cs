@@ -8,24 +8,24 @@ namespace L4_Task1_Shop_EF
     {
         static void Main(string[] args)
         {
-            using (var bookShop = new BookShopDB())
+            using (var bookShop = new BookShopDb())
             {
                 bookShop.AddCategories(new List<string> { "книга", "журнал", "газета", "блокнот", "календарь", "карандаши", "ручки", "фломастеры" });
                 bookShop.PrintCategories();
 
-                var product1 = bookShop.GetOrCreateProduct("Газетный журнал", 100, new string[] { "газета", "журнал" });
-                var product2 = bookShop.GetOrCreateProduct("Журнальная газетёнка", 150, new string[] { "газета", "журнал" });
-                var product3 = bookShop.GetOrCreateProduct("Питер Таймс", 250, new string[] { "газета" });
-                var product4 = bookShop.GetOrCreateProduct("Питер Пост", 250, new string[] { "журнал" });
-                var product5 = bookShop.GetOrCreateProduct("Корея сегодня", 550, new string[] { "журнал" });
+                var product1 = bookShop.GetOrCreateProduct("Газетный журнал", 100, new[] { "газета", "журнал" });
+                var product2 = bookShop.GetOrCreateProduct("Журнальная газетёнка", 150, new[] { "газета", "журнал" });
+                var product3 = bookShop.GetOrCreateProduct("Питер Таймс", 250, new[] { "газета" });
+                var product4 = bookShop.GetOrCreateProduct("Питер Пост", 250, new[] { "журнал" });
+                var product5 = bookShop.GetOrCreateProduct("Корея сегодня", 550, new[] { "журнал" });
                 bookShop.PrintProducts();
                 bookShop.PrintProductCategories();
 
                 var customer1 = bookShop.GetOrCreateCustomer("Валя", "Попов", "777-22-33", "valy@popov.net");
-                var customer2 = bookShop.GetOrCreateCustomer("Коля", "Кольянов", "777-22-11", "kol@koliyanov.net");
-                var customer3 = bookShop.GetOrCreateCustomer("Толя", "Тольянов", "777-22-22", "tolyan@miru.net");
-                var customer4 = bookShop.GetOrCreateCustomer("Поля", "Польянова", "666-66-66", "polya@vsegda.da");
-                var customer5 = bookShop.GetOrCreateCustomer("Юля", "Июля", "555-55-55", "nado-nebo@neba.net");
+                var customer2 = bookShop.GetOrCreateCustomer("Коля", "Колянов", "777-22-11", "kol@koliyanov.net");
+                var customer3 = bookShop.GetOrCreateCustomer("Толя", "Толянов", "777-22-22", "tolyan@miru.net");
+                var customer4 = bookShop.GetOrCreateCustomer("Поля", "Полянова", "666-66-66", "polya@vsegda.da");
+                var customer5 = bookShop.GetOrCreateCustomer("Юля", "Июлина", "555-55-55", "nado-nebo@neba.net");
                 bookShop.PrintCustomers();
 
                 bookShop.AddOrder(customer1, new List<ProductOrder>
@@ -36,12 +36,12 @@ namespace L4_Task1_Shop_EF
                     new ProductOrder { ProductId = product4.Id, Count = 4 },
                     new ProductOrder { ProductId = product5.Id, Count = 5 }
                 });
-                bookShop.AddOrder(customer2, new List<ProductOrder>
+                bookShop.AddOrder(customer3, new List<ProductOrder>
                 {
                     new ProductOrder { ProductId = product1.Id, Count = 10},
                     new ProductOrder { ProductId = product5.Id, Count = 5 }
                 });
-                bookShop.AddOrder(customer3, new List<ProductOrder>
+                bookShop.AddOrder(customer5, new List<ProductOrder>
                 {
                     new ProductOrder { ProductId = product1.Id, Count = 4 },
                     new ProductOrder { ProductId = product3.Id, Count = 4 },
@@ -55,10 +55,15 @@ namespace L4_Task1_Shop_EF
             }
 
             Console.WriteLine();
+            Console.WriteLine("<<<== Поиск, редактирование, удаление данных ==>>>");
+            Console.WriteLine();
 
             using (var db = new BookShopProductContext())
             {
-                var customer = db.Customers.FirstOrDefault(c => c.Surname == "Кольянов" && c.Name == "Коля");
+                Console.WriteLine("<<< Поиск данных >>>");
+                Console.WriteLine();
+
+                var customer = db.Customers.FirstOrDefault(c => c.Surname == "Толянов" && c.Name == "Толя");
 
                 if (customer == null)
                 {
@@ -68,14 +73,120 @@ namespace L4_Task1_Shop_EF
                 {
                     Console.WriteLine("Customer:");
                     Console.WriteLine(customer);
-                    /*
-                    var orders = db.Orders.Where(o => o.CustomerId == customer.Id);
+
+                    var orders = db.Orders.Where(o => o.CustomerId == customer.Id).ToList();
 
                     Console.WriteLine("Orders:");
                     foreach (var order in orders)
+
                     {
                         Console.WriteLine(order);
-                    }*/
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine("<<< Редактирование данных >>>");
+                    Console.WriteLine();
+
+
+                    customer.Phone = "123-0-321";
+                    customer.Mail = "valya-new@mail.ru";
+
+                    Console.WriteLine("<<< Удаление данных >>>");
+                    Console.WriteLine();
+
+                    var badCustomer = db.Customers.FirstOrDefault(c => c.Surname == "Колянов" && c.Name == "Коля");
+                    if (badCustomer != null)
+                    {
+                        db.Customers.Remove(badCustomer);
+                        db.SaveChanges();
+                    }
+
+                    var customers = db.Customers.ToList();
+                    foreach (var c in customers)
+                    {
+                        Console.WriteLine(c);
+                    }
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("<<<== Запросы с помощью LINQ ==>>>");
+            Console.WriteLine();
+
+            using (var db = new BookShopProductContext())
+            {
+                Console.WriteLine("<<< Самый популярный продукт >>>");
+
+                var popularProduct = db.ProductOrders
+                    .GroupBy(o => o.Product)
+                    .Select(g => new { Product = g.Key, Count = g.Sum(o => o.Count) })
+                    .OrderByDescending(p => p.Count)
+                    .FirstOrDefault();
+
+                if (popularProduct == null)
+                {
+                    Console.WriteLine("Самый популярный продукт не найден");
+                }
+                else
+                {
+                    Console.WriteLine("Самый популярный продукт: {0} ({1} заказов)", popularProduct.Product.Name, popularProduct.Count);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("<<< Расходы клиентов >>>");
+
+                var customerExpenses = db.Customers
+                    .Join(db.Orders,
+                        c => c.Id,
+                        o => o.CustomerId,
+                        (c, o) => new { Customer = c, OrderId = o.Id })
+                    .Join(db.ProductOrders,
+                        c => c.OrderId,
+                        po => po.OrderId,
+
+                        (c, po) => new
+                        {
+                            c.Customer,
+                            Expenses = po.Count * (db.Products.FirstOrDefault(p => p.Id == po.ProductId)).Price
+                        })
+                    .GroupBy(c => c.Customer)
+                    .Select(g => new { Customer = g.Key, Expenses = g.Sum(c => c.Expenses) })
+                    .ToList();
+
+                foreach (var customer in customerExpenses)
+                {
+                    Console.WriteLine("Клиент:[ id={0} ФИО={1} ] Расходы: {2} руб.",
+                        customer.Customer.Id,
+                        customer.Customer.Surname + " " + customer.Customer.Name,
+                        customer.Expenses);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("<<< Количество покупок по категориям >>>");
+
+                var categoryProductCounts = db.Categories
+                    .Join(db.ProductCategories,
+                        c => c.Id,
+                        pc => pc.CategoryId,
+                        (c, pc) => new { Category = c, pc.ProductId })
+                    //.Join(db.Products,
+                    //    c => c.ProductId,
+                    //    p => p.Id,
+                    //    (c, p) => new { c.Category, ProductId = p.Id })
+                    .Join(db.ProductOrders,
+                        c => c.ProductId,
+                        po => po.ProductId,
+                        (c, po) => new { c.Category, po.Count })
+                    .GroupBy(c => c.Category)
+                    .Select(g => new { Category = g.Key, Count = g.Sum(c => c.Count) })
+                    .ToList();
+
+                foreach (var category in categoryProductCounts)
+                {
+                    Console.WriteLine("Категория:[ id={0} Название={1} ] Заказано товаров: {2} шт.",
+                        category.Category.Id,
+                        category.Category.Name,
+                        category.Count);
                 }
             }
 

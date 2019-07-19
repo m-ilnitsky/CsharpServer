@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookShopDB.cs" />
+    <Compile Include="BookShopDb.cs" />
     <Compile Include="BookShopProductContext.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Customer.cs" />

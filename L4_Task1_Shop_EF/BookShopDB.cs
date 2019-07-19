@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace L4_Task1_Shop_EF
 {
-    class BookShopDB : IDisposable
+    class BookShopDb : IDisposable
     {
         private bool _disposed;
 
         private readonly BookShopProductContext _db;
 
-        public BookShopDB()
+        public BookShopDb()
         {
             _db = new BookShopProductContext();
         }
@@ -30,7 +30,7 @@ namespace L4_Task1_Shop_EF
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException("BookShopDB: _disposed == true");
+                throw new ObjectDisposedException("BookShopDb: _disposed == true");
             }
         }
 
