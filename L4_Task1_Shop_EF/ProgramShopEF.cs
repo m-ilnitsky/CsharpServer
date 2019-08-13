@@ -30,26 +30,70 @@ namespace L4_Task1_Shop_EF
 
                 bookShop.AddOrder(customer1, new List<ProductOrder>
                 {
-                    new ProductOrder { ProductId = product1.Id, Count = 1 },
-                    new ProductOrder { ProductId = product2.Id, Count = 2 },
-                    new ProductOrder { ProductId = product3.Id, Count = 3 },
-                    new ProductOrder { ProductId = product4.Id, Count = 4 },
-                    new ProductOrder { ProductId = product5.Id, Count = 5 }
+                    new ProductOrder
+                    {
+                        ProductId = product1.Id,
+                        Count = 1
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product2.Id,
+                        Count = 2
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product3.Id,
+                        Count = 3
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product4.Id,
+                        Count = 4
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product5.Id,
+                        Count = 5
+                    }
                 });
                 bookShop.AddOrder(customer3, new List<ProductOrder>
                 {
-                    new ProductOrder { ProductId = product1.Id, Count = 10},
-                    new ProductOrder { ProductId = product5.Id, Count = 5 }
+                    new ProductOrder
+                    {
+                        ProductId = product1.Id,
+                        Count = 10
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product5.Id,
+                        Count = 5
+                    }
                 });
                 bookShop.AddOrder(customer5, new List<ProductOrder>
                 {
-                    new ProductOrder { ProductId = product1.Id, Count = 4 },
-                    new ProductOrder { ProductId = product3.Id, Count = 4 },
-                    new ProductOrder { ProductId = product5.Id, Count = 4 }
+                    new ProductOrder
+                    {
+                        ProductId = product1.Id,
+                        Count = 4
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product3.Id,
+                        Count = 4
+                    },
+                    new ProductOrder
+                    {
+                        ProductId = product5.Id,
+                        Count = 4
+                    }
                 });
                 bookShop.AddOrder(customer1, new List<ProductOrder>
                 {
-                    new ProductOrder { ProductId = product1.Id, Count = 7 },
+                    new ProductOrder
+                    {
+                        ProductId = product1.Id,
+                        Count = 7
+                    },
                 });
                 bookShop.PrintOrders();
             }
@@ -74,11 +118,12 @@ namespace L4_Task1_Shop_EF
                     Console.WriteLine("Customer:");
                     Console.WriteLine(customer);
 
-                    var orders = db.Orders.Where(o => o.CustomerId == customer.Id).ToList();
+                    var orders = db.Orders
+                        .Where(o => o.CustomerId == customer.Id)
+                        .ToList();
 
                     Console.WriteLine("Orders:");
                     foreach (var order in orders)
-
                     {
                         Console.WriteLine(order);
                     }
@@ -86,7 +131,6 @@ namespace L4_Task1_Shop_EF
                     Console.WriteLine();
                     Console.WriteLine("<<< Редактирование данных >>>");
                     Console.WriteLine();
-
 
                     customer.Phone = "123-0-321";
                     customer.Mail = "valya-new@mail.ru";
@@ -119,7 +163,11 @@ namespace L4_Task1_Shop_EF
 
                 var popularProduct = db.ProductOrders
                     .GroupBy(o => o.Product)
-                    .Select(g => new { Product = g.Key, Count = g.Sum(o => o.Count) })
+                    .Select(g => new
+                    {
+                        Product = g.Key,
+                        Count = g.Sum(o => o.Count)
+                    })
                     .OrderByDescending(p => p.Count)
                     .FirstOrDefault();
 
@@ -135,25 +183,50 @@ namespace L4_Task1_Shop_EF
                 Console.WriteLine();
                 Console.WriteLine("<<< Расходы клиентов >>>");
 
-                var customerExpenses = db.Customers
+                var customerExpenses1 = db.Customers
                     .Join(db.Orders,
                         c => c.Id,
                         o => o.CustomerId,
-                        (c, o) => new { Customer = c, OrderId = o.Id })
+                        (c, o) => new
+                        {
+                            Customer = c,
+                            OrderId = o.Id
+                        })
                     .Join(db.ProductOrders,
                         c => c.OrderId,
                         po => po.OrderId,
-
                         (c, po) => new
                         {
                             c.Customer,
-                            Expenses = po.Count * (db.Products.FirstOrDefault(p => p.Id == po.ProductId)).Price
+                            Expenses = po.Count * po.Product.Price
                         })
                     .GroupBy(c => c.Customer)
-                    .Select(g => new { Customer = g.Key, Expenses = g.Sum(c => c.Expenses) })
+                    .Select(g => new
+                    {
+                        Customer = g.Key,
+                        Expenses = g.Sum(c => c.Expenses)
+                    })
                     .ToList();
 
-                foreach (var customer in customerExpenses)
+                var customerExpenses2 = db.Customers
+                    .Where(c => c.Orders.Count > 0)
+                    .Select(c => new
+                    {
+                        Customer = c,
+                        Expenses = c.Orders.Sum(o => o.ProductOrders.Sum(po => po.Count * po.Product.Price))
+                    });
+
+                foreach (var customer in customerExpenses1)
+                {
+                    Console.WriteLine("Клиент:[ id={0} ФИО={1} ] Расходы: {2} руб.",
+                        customer.Customer.Id,
+                        customer.Customer.Surname + " " + customer.Customer.Name,
+                        customer.Expenses);
+                }
+
+                Console.WriteLine();
+
+                foreach (var customer in customerExpenses2)
                 {
                     Console.WriteLine("Клиент:[ id={0} ФИО={1} ] Расходы: {2} руб.",
                         customer.Customer.Id,
@@ -164,24 +237,50 @@ namespace L4_Task1_Shop_EF
                 Console.WriteLine();
                 Console.WriteLine("<<< Количество покупок по категориям >>>");
 
-                var categoryProductCounts = db.Categories
+                var categoryProductCounts1 = db.Categories
                     .Join(db.ProductCategories,
                         c => c.Id,
                         pc => pc.CategoryId,
-                        (c, pc) => new { Category = c, pc.ProductId })
-                    //.Join(db.Products,
-                    //    c => c.ProductId,
-                    //    p => p.Id,
-                    //    (c, p) => new { c.Category, ProductId = p.Id })
+                        (c, pc) => new
+                        {
+                            Category = c,
+                            pc.ProductId
+                        })
                     .Join(db.ProductOrders,
                         c => c.ProductId,
                         po => po.ProductId,
-                        (c, po) => new { c.Category, po.Count })
+                        (c, po) => new
+                        {
+                            c.Category,
+                            po.Count
+                        })
                     .GroupBy(c => c.Category)
-                    .Select(g => new { Category = g.Key, Count = g.Sum(c => c.Count) })
+                    .Select(g => new
+                    {
+                        Category = g.Key,
+                        Count = g.Sum(c => c.Count)
+                    })
                     .ToList();
 
-                foreach (var category in categoryProductCounts)
+                var categoryProductCounts2 = db.Categories
+                    .Where(c => c.ProductCategories.Count > 0)
+                    .Select(c => new
+                    {
+                        Category = c,
+                        Count = c.ProductCategories.Sum(pc => pc.Product.ProductOrders.Sum(po => po.Count))
+                    });
+
+                foreach (var category in categoryProductCounts1)
+                {
+                    Console.WriteLine("Категория:[ id={0} Название={1} ] Заказано товаров: {2} шт.",
+                        category.Category.Id,
+                        category.Category.Name,
+                        category.Count);
+                }
+
+                Console.WriteLine();
+
+                foreach (var category in categoryProductCounts2)
                 {
                     Console.WriteLine("Категория:[ id={0} Название={1} ] Заказано товаров: {2} шт.",
                         category.Category.Id,

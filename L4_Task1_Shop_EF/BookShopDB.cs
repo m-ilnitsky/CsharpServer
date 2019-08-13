@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace L4_Task1_Shop_EF
 {
-    class BookShopDb : IDisposable
+    public class BookShopDb : IDisposable
     {
         private bool _disposed;
 
@@ -36,6 +36,8 @@ namespace L4_Task1_Shop_EF
 
         public void PrintCategories()
         {
+            CheckDisposed();
+
             var categories = _db.Categories.ToArray();
 
             Console.WriteLine();
@@ -49,6 +51,8 @@ namespace L4_Task1_Shop_EF
 
         public void PrintProducts()
         {
+            CheckDisposed();
+
             var products = _db.Products.ToArray();
 
             Console.WriteLine();
@@ -62,6 +66,8 @@ namespace L4_Task1_Shop_EF
 
         public void PrintProductCategories()
         {
+            CheckDisposed();
+
             var productCategories = _db.ProductCategories.ToArray();
 
             Console.WriteLine();
@@ -75,6 +81,8 @@ namespace L4_Task1_Shop_EF
 
         public void PrintCustomers()
         {
+            CheckDisposed();
+
             var customers = _db.Customers.ToArray();
 
             Console.WriteLine();
@@ -88,6 +96,8 @@ namespace L4_Task1_Shop_EF
 
         public void PrintOrders()
         {
+            CheckDisposed();
+
             var orders = _db.Orders.ToArray();
 
             Console.WriteLine();
@@ -101,11 +111,17 @@ namespace L4_Task1_Shop_EF
 
         public Category GetOrCreateCategory(string categoryName)
         {
+            CheckDisposed();
+
             var category = _db.Categories.FirstOrDefault(c => c.Name == categoryName);
 
             if (category == null)
             {
-                category = new Category() { Name = categoryName };
+                category = new Category
+                {
+                    Name = categoryName
+                };
+
                 _db.Categories.Add(category);
                 _db.SaveChanges();
             }
@@ -123,11 +139,17 @@ namespace L4_Task1_Shop_EF
 
         public Product GetOrCreateProduct(string name, decimal price, string[] categoryNames)
         {
+            CheckDisposed();
+
             var product = _db.Products.FirstOrDefault(c => c.Name == name);
 
             if (product == null)
             {
-                product = new Product() { Name = name, Price = price };
+                product = new Product
+                {
+                    Name = name,
+                    Price = price
+                };
 
                 _db.Products.Add(product);
 
@@ -138,8 +160,12 @@ namespace L4_Task1_Shop_EF
                 {
                     categories[i] = GetOrCreateCategory(categoryNames[i]);
 
+                    productCategories[i] = new ProductCategory
+                    {
+                        ProductId = product.Id,
+                        CategoryId = categories[i].Id
+                    };
 
-                    productCategories[i] = new ProductCategory() { ProductId = product.Id, CategoryId = categories[i].Id };
                     _db.ProductCategories.Add(productCategories[i]);
                 }
 
@@ -151,11 +177,19 @@ namespace L4_Task1_Shop_EF
 
         public Customer GetOrCreateCustomer(string name, string surname, string phone, string mail)
         {
+            CheckDisposed();
+
             var customer = _db.Customers.FirstOrDefault(c => c.Name == name && c.Surname == surname);
 
             if (customer == null)
             {
-                customer = new Customer { Name = name, Surname = surname, Phone = phone, Mail = mail };
+                customer = new Customer
+                {
+                    Name = name,
+                    Surname = surname,
+                    Phone = phone,
+                    Mail = mail
+                };
 
                 _db.Customers.Add(customer);
                 _db.SaveChanges();
@@ -174,7 +208,14 @@ namespace L4_Task1_Shop_EF
 
         public void AddOrder(Customer customer, ICollection<ProductOrder> productOrders)
         {
-            var order = new Order { CustomerId = customer.Id, Date = DateTime.Now };
+            CheckDisposed();
+
+            var order = new Order
+            {
+                CustomerId = customer.Id,
+                Date = DateTime.Now
+            };
+
             _db.Orders.Add(order);
 
             foreach (var productOrder in productOrders)
