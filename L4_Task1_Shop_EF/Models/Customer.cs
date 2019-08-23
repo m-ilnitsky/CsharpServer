@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace L4_Task1_Shop_EF
@@ -11,6 +12,8 @@ namespace L4_Task1_Shop_EF
 
         public string Surname { get; set; }
 
+        public DateTime? Birthday { get; set; }
+
         public string Phone { get; set; }
 
         public string Mail { get; set; }
@@ -21,7 +24,9 @@ namespace L4_Task1_Shop_EF
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,4} Name: {1,-20}   Phone: {2, 10}   Mail: {3}", Id, Surname + " " + Name, Phone, Mail);
+            var date = (Birthday != null) ? Birthday.Value.Date.ToString("d") : "";
+
+            stringBuilder.AppendFormat("Id:{0,4} Name: {1,-20}   Phone: {2, 10}   Mail: {3, 20} Birthday: {4}", Id, Surname + " " + Name, Phone, Mail, date);
 
             return stringBuilder.ToString();
         }

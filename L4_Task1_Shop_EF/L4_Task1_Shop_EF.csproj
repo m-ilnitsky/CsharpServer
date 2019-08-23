@@ -51,6 +51,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookShopDb.cs" />
+    <Compile Include="Migrations\201907191251077_InitialCreate.cs" />
+    <Compile Include="Migrations\201907191251077_InitialCreate.Designer.cs">
+      <DependentUpon>201907191251077_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908231014206_SampleMigrations.cs" />
+    <Compile Include="Migrations\201908231014206_SampleMigrations.Designer.cs">
+      <DependentUpon>201908231014206_SampleMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BookShopProductContext.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -65,6 +74,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907191251077_InitialCreate.resx">
+      <DependentUpon>201907191251077_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908231014206_SampleMigrations.resx">
+      <DependentUpon>201908231014206_SampleMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

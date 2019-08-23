@@ -175,7 +175,7 @@ namespace L4_Task1_Shop_EF
             return product;
         }
 
-        public Customer GetOrCreateCustomer(string name, string surname, string phone, string mail)
+        public Customer GetOrCreateCustomer(string name, string surname, string phone, string mail, DateTime? birthday)
         {
             CheckDisposed();
 
@@ -194,6 +194,11 @@ namespace L4_Task1_Shop_EF
                 _db.Customers.Add(customer);
                 _db.SaveChanges();
             }
+            else if (customer.Birthday == null && birthday != null)
+            {
+                customer.Birthday = birthday;
+                _db.SaveChanges();
+            }
 
             return customer;
         }
@@ -202,7 +207,7 @@ namespace L4_Task1_Shop_EF
         {
             foreach (var customer in customers)
             {
-                GetOrCreateCustomer(customer.Name, customer.Surname, customer.Phone, customer.Mail);
+                GetOrCreateCustomer(customer.Name, customer.Surname, customer.Phone, customer.Mail, customer.Birthday);
             }
         }
 

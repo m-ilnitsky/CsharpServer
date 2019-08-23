@@ -48,6 +48,7 @@ namespace L4_Task1_Shop_EF
             modelBuilder.Entity<Customer>().Property(c => c.Surname).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<Customer>().Property(c => c.Phone).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<Customer>().Property(c => c.Mail).IsOptional().HasMaxLength(50);
+            modelBuilder.Entity<Customer>().Property(c => c.Birthday);
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.Orders)
                 .WithRequired(o => o.Customer);

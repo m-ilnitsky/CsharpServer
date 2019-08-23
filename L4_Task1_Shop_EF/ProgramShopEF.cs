@@ -21,11 +21,11 @@ namespace L4_Task1_Shop_EF
                 bookShop.PrintProducts();
                 bookShop.PrintProductCategories();
 
-                var customer1 = bookShop.GetOrCreateCustomer("Валя", "Попов", "777-22-33", "valy@popov.net");
-                var customer2 = bookShop.GetOrCreateCustomer("Коля", "Колянов", "777-22-11", "kol@koliyanov.net");
-                var customer3 = bookShop.GetOrCreateCustomer("Толя", "Толянов", "777-22-22", "tolyan@miru.net");
-                var customer4 = bookShop.GetOrCreateCustomer("Поля", "Полянова", "666-66-66", "polya@vsegda.da");
-                var customer5 = bookShop.GetOrCreateCustomer("Юля", "Июлина", "555-55-55", "nado-nebo@neba.net");
+                var customer1 = bookShop.GetOrCreateCustomer("Валя", "Попов", "777-22-33", "valy@popov.net", new DateTime(2000, 1, 1));
+                var customer2 = bookShop.GetOrCreateCustomer("Коля", "Колянов", "777-22-11", "kol@koliyanov.net", new DateTime(1988, 8, 8));
+                var customer3 = bookShop.GetOrCreateCustomer("Толя", "Толянов", "777-22-22", "tolyan@miru.net", new DateTime(1977, 7, 7));
+                var customer4 = bookShop.GetOrCreateCustomer("Поля", "Полянова", "666-66-66", "polya@vsegda.da", new DateTime(1966, 6, 6));
+                var customer5 = bookShop.GetOrCreateCustomer("Юля", "Июлина", "555-55-55", "nado-nebo@neba.net", null);
                 bookShop.PrintCustomers();
 
                 bookShop.AddOrder(customer1, new List<ProductOrder>
