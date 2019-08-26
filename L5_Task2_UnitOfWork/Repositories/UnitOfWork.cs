@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace L5_Task2_UnitOfWork.Repositories
 {
@@ -28,10 +24,24 @@ namespace L5_Task2_UnitOfWork.Repositories
 
         public T GetRepository<T>() where T : class, IRepository
         {
-            if (typeof(T) == typeof())
+            if (typeof(T) == typeof(ProductRepository))
             {
-
+                return new ProductRepository(_db) as T;
             }
+            if (typeof(T) == typeof(ICategoryRepository))
+            {
+                return new CategoryRepository(_db) as T;
+            }
+            if (typeof(T) == typeof(ICustomerRepository))
+            {
+                return new CustomerRepository(_db) as T;
+            }
+            if (typeof(T) == typeof(IOrderRepository))
+            {
+                return new OrderRepository(_db) as T;
+            }
+
+            throw new Exception("Неизвестный тип репозитория: " + typeof(T));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace L4_Task1_Shop_EF
+﻿namespace L5_Task2_UnitOfWork.Entities
 {
     public class ProductOrder
     {

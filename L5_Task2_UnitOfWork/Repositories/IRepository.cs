@@ -1,4 +1,6 @@
-﻿namespace L5_Task2_UnitOfWork.Repositories
+﻿using System.Collections.Generic;
+
+namespace L5_Task2_UnitOfWork.Repositories
 {
     public interface IRepository
     {
@@ -9,7 +11,7 @@
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
-        T[] GetAll();
+        List<T> GetAll();
         T GetById(int id);
     }
 }
