@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L3_Task1_ADO_NET", "L3_Task
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L4_Task1_Shop_EF", "L4_Task1_Shop_EF\L4_Task1_Shop_EF.csproj", "{AE5B7851-0257-4E08-9C9A-6B6FC5F02EC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L5_Task2_UnitOfWork", "L5_Task2_UnitOfWork\L5_Task2_UnitOfWork.csproj", "{8EB489F8-ABA6-4A0D-9AE4-4F0BEAB6095B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AE5B7851-0257-4E08-9C9A-6B6FC5F02EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE5B7851-0257-4E08-9C9A-6B6FC5F02EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE5B7851-0257-4E08-9C9A-6B6FC5F02EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB489F8-ABA6-4A0D-9AE4-4F0BEAB6095B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB489F8-ABA6-4A0D-9AE4-4F0BEAB6095B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB489F8-ABA6-4A0D-9AE4-4F0BEAB6095B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB489F8-ABA6-4A0D-9AE4-4F0BEAB6095B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
