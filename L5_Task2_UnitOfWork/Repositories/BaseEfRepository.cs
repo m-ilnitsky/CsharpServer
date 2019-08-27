@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -49,6 +50,22 @@ namespace L5_Task2_UnitOfWork.Repositories
         {
             _dbSet.Attach(entity);
             _db.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void PrintAll()
+        {
+            foreach (var e in _dbSet.ToList())
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public virtual void Print(List<T> list)
+        {
+            foreach (var e in list)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

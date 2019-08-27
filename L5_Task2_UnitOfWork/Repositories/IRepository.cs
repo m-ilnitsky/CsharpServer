@@ -13,5 +13,7 @@ namespace L5_Task2_UnitOfWork.Repositories
         void Delete(T entity);
         List<T> GetAll();
         T GetById(int id);
+        void PrintAll();
+        void Print(List<T> list);
     }
 }

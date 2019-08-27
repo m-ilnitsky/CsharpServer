@@ -15,7 +15,7 @@ namespace L5_Task2_UnitOfWork.Entities
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,4} Name: {1,-20}", Id, Name);
+            stringBuilder.AppendFormat("Id:{0,3}  Name: {1,-20}", Id, Name);
 
             return stringBuilder.ToString();
         }

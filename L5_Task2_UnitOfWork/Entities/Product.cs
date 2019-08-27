@@ -19,7 +19,7 @@ namespace L5_Task2_UnitOfWork.Entities
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,3} Name: {1,-30}   Price: {2, 8}   Categories: [", Id, Name, Price);
+            stringBuilder.AppendFormat("Id:{0,3}  Name: {1,-30}   Price: {2, 8}   Categories: [", Id, Name, Price);
 
             if (ProductCategories.Count > 0)
             {

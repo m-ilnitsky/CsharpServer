@@ -26,7 +26,7 @@ namespace L5_Task2_UnitOfWork.Entities
 
             var date = (Birthday != null) ? Birthday.Value.Date.ToString("d") : "";
 
-            stringBuilder.AppendFormat("Id:{0,4} Name: {1,-20}   Phone: {2, 10}   Mail: {3, 20} Birthday: {4}", Id, Surname + " " + Name, Phone, Mail, date);
+            stringBuilder.AppendFormat("Id:{0,3}  Name: {1,-20}   Phone: {2, 10}   Mail: {3, 20} Birthday: {4}", Id, Surname + " " + Name, Phone, Mail, date);
 
             return stringBuilder.ToString();
         }

@@ -20,7 +20,7 @@ namespace L5_Task2_UnitOfWork.Entities
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("Id:{0,3} Customer: {1,-20} Products: [", Id, Customer.Surname + " " + Customer.Name);
+            stringBuilder.AppendFormat("Id:{0,3}  Customer: {1,-20} Products: [", Id, Customer.Surname + " " + Customer.Name);
 
             if (ProductOrders.Count > 0)
             {

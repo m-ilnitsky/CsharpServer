@@ -2,7 +2,7 @@
 
 namespace L5_Task2_UnitOfWork.Repositories
 {
-    public interface IOrderRepository : IRepository<Order>
+    public interface IProductRepository : IRepository<Product>
     {
     }
 }

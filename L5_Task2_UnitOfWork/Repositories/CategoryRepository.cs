@@ -3,6 +3,7 @@ using System.Linq;
 using System.Data.Entity;
 
 using L5_Task2_UnitOfWork.Entities;
+using L5_Task2_UnitOfWork.Pairs;
 
 namespace L5_Task2_UnitOfWork.Repositories
 {
@@ -19,15 +20,24 @@ namespace L5_Task2_UnitOfWork.Repositories
                     .Select(c => new CategoryAndCount
                     {
                         Category = c,
-                        Count = c.ProductCategories.Sum(pc => pc.Product.ProductOrders.Sum(po => po.Count))
+                        Count = c.ProductCategories.Sum(pc => (pc.Product.ProductOrders.Count > 0) ? pc.Product.ProductOrders.Sum(po => po.Count) : 0)
                     })
                     .ToList<CategoryAndCount>();
         }
 
         public int GetCountOfProducts(Category category)
         {
-            return _dbSet
-                    .Find(category)
+            if (_dbSet.Find(category.Id) == null)
+            {
+                return 0;
+            }
+
+            if (category.ProductCategories.Count == 0)
+            {
+                return 0;
+            }
+
+            return category
                     .ProductCategories
                     .Sum(pc => pc.Product.ProductOrders.Sum(po => po.Count));
         }

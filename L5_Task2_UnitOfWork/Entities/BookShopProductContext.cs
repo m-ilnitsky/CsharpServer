@@ -16,7 +16,7 @@ namespace L5_Task2_UnitOfWork.Entities
 
         public DbSet<ProductOrder> ProductOrders { get; set; }
 
-        public BookShopProductContext() : base("eBookShopConnection")
+        public BookShopProductContext() : base("eBookShopConnectionUOW")
         {
         }
 

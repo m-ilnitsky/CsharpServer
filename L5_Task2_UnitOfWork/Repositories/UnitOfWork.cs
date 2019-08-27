@@ -5,7 +5,7 @@ namespace L5_Task2_UnitOfWork.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DbContext _db;
+        private readonly DbContext _db;
 
         public UnitOfWork(DbContext dbContext)
         {
@@ -24,7 +24,7 @@ namespace L5_Task2_UnitOfWork.Repositories
 
         public T GetRepository<T>() where T : class, IRepository
         {
-            if (typeof(T) == typeof(ProductRepository))
+            if (typeof(T) == typeof(IProductRepository))
             {
                 return new ProductRepository(_db) as T;
             }
@@ -35,6 +35,14 @@ namespace L5_Task2_UnitOfWork.Repositories
             if (typeof(T) == typeof(ICustomerRepository))
             {
                 return new CustomerRepository(_db) as T;
+            }
+            if (typeof(T) == typeof(IProductCategoryRepository))
+            {
+                return new ProductCategoryRepository(_db) as T;
+            }
+            if (typeof(T) == typeof(IProductOrderRepository))
+            {
+                return new ProductOrderRepository(_db) as T;
             }
             if (typeof(T) == typeof(IOrderRepository))
             {
