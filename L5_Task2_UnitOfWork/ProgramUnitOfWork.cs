@@ -126,13 +126,13 @@ namespace L5_Task2_UnitOfWork
 
                 Console.WriteLine();
                 var categoryForRemove = categoryRepository.GetById(8);
-                Console.WriteLine("Удаление в рамках тарнзакции категории '{0}':", categoryForRemove.Name);
+                Console.WriteLine("Удаление в рамках транзакции категории '{0}':", categoryForRemove.Name);
                 uow.TransactionOfRemove<CategoryRepository, Category>(categoryForRemove);
                 categoryRepository.PrintAll();
 
                 Console.WriteLine();
                 var productForRemove = productRepository.GetById(6);
-                Console.WriteLine("Удаление в рамках тарнзакции товара '{0}':", productForRemove.Name);
+                Console.WriteLine("Удаление в рамках транзакции товара '{0}':", productForRemove.Name);
                 uow.TransactionOfRemove<ProductRepository, Product>(productForRemove);
                 productRepository.PrintAll();
 
