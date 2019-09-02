@@ -125,15 +125,15 @@ namespace L5_Task2_UnitOfWork
                 Console.WriteLine("Суммарные расходы клиента '{0} {1}': {2}", customer.Name, customer.Surname, customerRepository.GetTotalPrice(customer));
 
                 Console.WriteLine();
-                var categoryForRemove = categoryRepository.GetById(8);
-                Console.WriteLine("Удаление в рамках транзакции категории '{0}':", categoryForRemove.Name);
-                uow.TransactionOfRemove<CategoryRepository, Category>(categoryForRemove);
-                categoryRepository.PrintAll();
+                var categoryForRemove = categoryRepository.GetById(7);
+                var productForRemove = productRepository.GetById(6);
+                Console.WriteLine("Удаление в рамках транзакции категории '{0}' и товара '{1}':", categoryForRemove.Name, productForRemove.Name);
+                uow.TransactionOfRemove<ICategoryRepository, Category, IProductRepository, Product>(categoryForRemove, productForRemove);
 
                 Console.WriteLine();
-                var productForRemove = productRepository.GetById(6);
-                Console.WriteLine("Удаление в рамках транзакции товара '{0}':", productForRemove.Name);
-                uow.TransactionOfRemove<ProductRepository, Product>(productForRemove);
+                Console.WriteLine("Оставшиеся категории:");
+                categoryRepository.PrintAll();
+                Console.WriteLine("Оставшиеся товары:");
                 productRepository.PrintAll();
 
                 Console.ReadKey();

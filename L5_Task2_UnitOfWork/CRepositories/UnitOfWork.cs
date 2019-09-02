@@ -52,22 +52,28 @@ namespace L5_Task2_UnitOfWork.Repositories
             throw new Exception("Неизвестный тип репозитория: " + typeof(T));
         }
 
-        public void TransactionOfRemove<TR, TE>(TE entity) where TR : class, IRepository, IRepository<TE> where TE : class
+        public void TransactionOfRemove<TR1, TE1, TR2, TE2>(TE1 entity1, TE2 entity2)
+            where TR1 : class, IRepository, IRepository<TE1> where TE1 : class
+            where TR2 : class, IRepository, IRepository<TE2> where TE2 : class
         {
             using (var dbTransaction = _db.Database.BeginTransaction())
             {
                 try
                 {
-                    var repository = GetRepository<TR>();
+                    var repository1 = GetRepository<TR1>();
+                    var repository2 = GetRepository<TR2>();
 
-                    repository.Delete(entity);
+                    repository1.Delete(entity1);
+                    repository2.Delete(entity2);
 
                     _db.SaveChanges();
 
                     dbTransaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine("Exception in TransactionOfRemove: " + e.Message);
+
                     dbTransaction.Rollback();
                 }
             }

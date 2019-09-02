@@ -22,7 +22,7 @@ namespace L5_Task2_UnitOfWork.Repositories
                         Category = c,
                         Count = c.ProductCategories.Sum(pc => (pc.Product.ProductOrders.Count > 0) ? pc.Product.ProductOrders.Sum(po => po.Count) : 0)
                     })
-                    .ToList<CategoryAndCount>();
+                    .ToList();
         }
 
         public int GetCountOfProducts(Category category)

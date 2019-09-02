@@ -22,7 +22,7 @@ namespace L5_Task2_UnitOfWork.Repositories
                         Customer = c,
                         Price = c.Orders.Sum(o => o.ProductOrders.Sum(po => po.Count * po.Product.Price))
                     })
-                    .ToList<CustomerAndPrice>();
+                    .ToList();
         }
 
         public decimal GetTotalPrice(Customer customer)

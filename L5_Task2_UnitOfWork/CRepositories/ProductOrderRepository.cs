@@ -15,7 +15,7 @@ namespace L5_Task2_UnitOfWork.Repositories
 
         public List<ProductAndCount> GetMostFrequentProducts()
         {
-            int maxCount = _dbSet
+            var maxCount = _dbSet
                 .GroupBy(o => o.Product)
                 .Select(g => g.Sum(o => o.Count))
                 .Max(v => v);
