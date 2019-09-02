@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using L5_Task2_UnitOfWork.Entities;
 using L5_Task2_UnitOfWork.Repositories;
 
@@ -13,7 +9,7 @@ namespace L5_Task2_UnitOfWork
     {
         static void Main(string[] args)
         {
-            Database.SetInitializer<BookShopProductContext>(new DropCreateDatabaseAlways<BookShopProductContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<BookShopProductContext>());
 
             using (var uow = new UnitOfWork(new BookShopProductContext()))
             {
