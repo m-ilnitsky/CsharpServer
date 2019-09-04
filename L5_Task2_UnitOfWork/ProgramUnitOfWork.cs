@@ -123,8 +123,44 @@ namespace L5_Task2_UnitOfWork
                 Console.WriteLine();
                 var categoryForRemove = categoryRepository.GetById(7);
                 var productForRemove = productRepository.GetById(6);
-                Console.WriteLine("Удаление в рамках транзакции категории '{0}' и товара '{1}':", categoryForRemove.Name, productForRemove.Name);
+                Console.WriteLine("Удаление в рамках транзакции категории '{0}' и товара '{1}'", categoryForRemove.Name, productForRemove.Name);
                 uow.TransactionOfRemove<ICategoryRepository, Category, IProductRepository, Product>(categoryForRemove, productForRemove);
+
+                Console.WriteLine();
+                Console.WriteLine("Оставшиеся категории:");
+                categoryRepository.PrintAll();
+                Console.WriteLine("Оставшиеся товары:");
+                productRepository.PrintAll();
+
+                Console.WriteLine();
+                var removingProduct1 = productRepository.GetById(1);
+                var removingProduct2 = productRepository.GetById(2);
+                var removingProduct3 = productRepository.GetById(3);
+                var removingCategory = categoryRepository.GetById(3);
+                Console.WriteLine("Удаление в рамках транзакции категории '{0}' и товаров: '{1}', '{1}', '{1}'",
+                    removingCategory.Name, removingProduct1.Name, removingProduct2.Name, removingProduct3.Name);
+
+                uow.StartTransaction();
+                try
+                {
+                    //throw new Exception("Прервём транзакцию перед началом изменений!");
+
+                    productRepository.Delete(removingProduct1);
+                    productRepository.Delete(removingProduct2);
+                    productRepository.Delete(removingProduct3);
+                    categoryRepository.Delete(removingCategory);
+
+                    throw new Exception("Прервём транзакцию перед Save!");
+
+                    uow.SaveTransaction();
+
+                    //throw new Exception("Прервём транзакцию после Save!");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Произошло исключение: " + e.Message);
+                    uow.RollbackTransaction();
+                }
 
                 Console.WriteLine();
                 Console.WriteLine("Оставшиеся категории:");

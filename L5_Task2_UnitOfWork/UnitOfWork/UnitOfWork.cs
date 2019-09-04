@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Transactions;
 
 namespace L5_Task2_UnitOfWork.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _db;
+
+        private DbContextTransaction _transaction;
+        private bool _startTransaction;
 
         public UnitOfWork(DbContext dbContext)
         {
@@ -77,6 +81,40 @@ namespace L5_Task2_UnitOfWork.Repositories
                     dbTransaction.Rollback();
                 }
             }
+        }
+
+        public void StartTransaction()
+        {
+            if (_startTransaction)
+            {
+                throw new TransactionException("Предыдущая транзакция не закончена!");
+            }
+
+            _transaction = _db.Database.BeginTransaction();
+            _startTransaction = true;
+        }
+
+        public void RollbackTransaction()
+        {
+            if (!_startTransaction)
+            {
+                throw new TransactionException("Транзакция уже завершена!");
+            }
+
+            _transaction.Rollback();
+            _startTransaction = false;
+        }
+
+        public void SaveTransaction()
+        {
+            if (!_startTransaction)
+            {
+                throw new TransactionException("Транзакция уже завершена!");
+            }
+
+            _db.SaveChanges();
+            _transaction.Commit();
+            _startTransaction = false;
         }
     }
 }

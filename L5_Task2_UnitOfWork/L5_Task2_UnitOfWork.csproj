@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,38 +51,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CEntities\BookShopProductContext.cs" />
-    <Compile Include="CEntities\Category.cs" />
-    <Compile Include="CEntities\Customer.cs" />
-    <Compile Include="CEntities\Order.cs" />
-    <Compile Include="CEntities\Product.cs" />
-    <Compile Include="CEntities\ProductCategory.cs" />
-    <Compile Include="CEntities\ProductOrder.cs" />
-    <Compile Include="IRepositories\ICategoryRepository.cs" />
-    <Compile Include="IRepositories\ICustomerRepository.cs" />
-    <Compile Include="IRepositories\IOrderRepository.cs" />
-    <Compile Include="IRepositories\IProductCategoryRepository.cs" />
-    <Compile Include="IRepositories\IProductOrderRepository.cs" />
-    <Compile Include="IRepositories\IProductRepository.cs" />
-    <Compile Include="IRepositories\IRepository.cs" />
-    <Compile Include="IRepositories\IUnitOfWork.cs" />
+    <Compile Include="Entities\BookShopProductContext.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ProductCategory.cs" />
+    <Compile Include="Entities\ProductOrder.cs" />
+    <Compile Include="Repositories\Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICustomerRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IOrderRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IProductCategoryRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IProductOrderRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IProductRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IRepository.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="ProgramUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CRepositories\BaseEfRepository.cs" />
-    <Compile Include="CPairs\CategoryAndCount.cs" />
-    <Compile Include="CRepositories\CategoryRepository.cs" />
-    <Compile Include="CPairs\CustomerAndPrice.cs" />
-    <Compile Include="CRepositories\CustomerRepository.cs" />
-    <Compile Include="CPairs\ProductAndCount.cs" />
-    <Compile Include="CRepositories\OrderRepository.cs" />
-    <Compile Include="CRepositories\ProductCategoryRepository.cs" />
-    <Compile Include="CRepositories\ProductOrderRepository.cs" />
-    <Compile Include="CRepositories\ProductRepository.cs" />
-    <Compile Include="CRepositories\UnitOfWork.cs" />
+    <Compile Include="Repositories\Implementations\BaseEfRepository.cs" />
+    <Compile Include="Pairs\CategoryAndCount.cs" />
+    <Compile Include="Repositories\Implementations\CategoryRepository.cs" />
+    <Compile Include="Pairs\CustomerAndPrice.cs" />
+    <Compile Include="Repositories\Implementations\CustomerRepository.cs" />
+    <Compile Include="Pairs\ProductAndCount.cs" />
+    <Compile Include="Repositories\Implementations\OrderRepository.cs" />
+    <Compile Include="Repositories\Implementations\ProductCategoryRepository.cs" />
+    <Compile Include="Repositories\Implementations\ProductOrderRepository.cs" />
+    <Compile Include="Repositories\Implementations\ProductRepository.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
