@@ -19,6 +19,12 @@ namespace L5_Task2_UnitOfWork.Repositories
         public void Save()
         {
             _db.SaveChanges();
+
+            if (_startTransaction)
+            {
+                _transaction.Commit();
+                _startTransaction = false;
+            }
         }
 
         public void Dispose()
@@ -56,33 +62,6 @@ namespace L5_Task2_UnitOfWork.Repositories
             throw new Exception("Неизвестный тип репозитория: " + typeof(T));
         }
 
-        public void TransactionOfRemove<TR1, TE1, TR2, TE2>(TE1 entity1, TE2 entity2)
-            where TR1 : class, IRepository, IRepository<TE1> where TE1 : class
-            where TR2 : class, IRepository, IRepository<TE2> where TE2 : class
-        {
-            using (var dbTransaction = _db.Database.BeginTransaction())
-            {
-                try
-                {
-                    var repository1 = GetRepository<TR1>();
-                    var repository2 = GetRepository<TR2>();
-
-                    repository1.Delete(entity1);
-                    repository2.Delete(entity2);
-
-                    _db.SaveChanges();
-
-                    dbTransaction.Commit();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Exception in TransactionOfRemove: " + e.Message);
-
-                    dbTransaction.Rollback();
-                }
-            }
-        }
-
         public void StartTransaction()
         {
             if (_startTransaction)
@@ -102,18 +81,6 @@ namespace L5_Task2_UnitOfWork.Repositories
             }
 
             _transaction.Rollback();
-            _startTransaction = false;
-        }
-
-        public void SaveTransaction()
-        {
-            if (!_startTransaction)
-            {
-                throw new TransactionException("Транзакция уже завершена!");
-            }
-
-            _db.SaveChanges();
-            _transaction.Commit();
             _startTransaction = false;
         }
     }

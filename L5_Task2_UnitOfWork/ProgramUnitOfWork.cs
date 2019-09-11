@@ -121,18 +121,6 @@ namespace L5_Task2_UnitOfWork
                 Console.WriteLine("Суммарные расходы клиента '{0} {1}': {2}", customer.Name, customer.Surname, customerRepository.GetTotalPrice(customer));
 
                 Console.WriteLine();
-                var categoryForRemove = categoryRepository.GetById(7);
-                var productForRemove = productRepository.GetById(6);
-                Console.WriteLine("Удаление в рамках транзакции категории '{0}' и товара '{1}'", categoryForRemove.Name, productForRemove.Name);
-                uow.TransactionOfRemove<ICategoryRepository, Category, IProductRepository, Product>(categoryForRemove, productForRemove);
-
-                Console.WriteLine();
-                Console.WriteLine("Оставшиеся категории:");
-                categoryRepository.PrintAll();
-                Console.WriteLine("Оставшиеся товары:");
-                productRepository.PrintAll();
-
-                Console.WriteLine();
                 var removingProduct1 = productRepository.GetById(1);
                 var removingProduct2 = productRepository.GetById(2);
                 var removingProduct3 = productRepository.GetById(3);
@@ -152,7 +140,7 @@ namespace L5_Task2_UnitOfWork
 
                     throw new Exception("Прервём транзакцию перед Save!");
 
-                    uow.SaveTransaction();
+                    uow.Save();
 
                     //throw new Exception("Прервём транзакцию после Save!");
                 }
