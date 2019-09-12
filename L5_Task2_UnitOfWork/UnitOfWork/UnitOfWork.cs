@@ -9,7 +9,6 @@ namespace L5_Task2_UnitOfWork.Repositories
         private readonly DbContext _db;
 
         private DbContextTransaction _transaction;
-        private bool _startTransaction;
 
         public UnitOfWork(DbContext dbContext)
         {
@@ -20,15 +19,21 @@ namespace L5_Task2_UnitOfWork.Repositories
         {
             _db.SaveChanges();
 
-            if (_startTransaction)
+            if (_transaction != null)
             {
                 _transaction.Commit();
-                _startTransaction = false;
+                _transaction = null;
             }
         }
 
         public void Dispose()
         {
+            if (_transaction != null)
+            {
+                _transaction.Rollback();
+                _transaction = null;
+            }
+
             _db.Dispose();
         }
 
@@ -64,24 +69,23 @@ namespace L5_Task2_UnitOfWork.Repositories
 
         public void StartTransaction()
         {
-            if (_startTransaction)
+            if (_transaction != null)
             {
                 throw new TransactionException("Предыдущая транзакция не закончена!");
             }
 
             _transaction = _db.Database.BeginTransaction();
-            _startTransaction = true;
         }
 
         public void RollbackTransaction()
         {
-            if (!_startTransaction)
+            if (_transaction == null)
             {
                 throw new TransactionException("Транзакция уже завершена!");
             }
 
             _transaction.Rollback();
-            _startTransaction = false;
+            _transaction = null;
         }
     }
 }
