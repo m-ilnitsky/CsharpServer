@@ -1,6 +1,6 @@
 ﻿using Quartz;
 using Quartz.Impl;
-using System.Threading.Tasks;
+using System;
 
 namespace L8_Task1_Job_v2
 {
@@ -18,18 +18,30 @@ namespace L8_Task1_Job_v2
             _trigger = trigger;
         }
 
-        public async Task Start()
+        public bool Start()
         {
-            IScheduler scheduler = await _factory.GetScheduler();
-            _scheduler = scheduler;
+            try
+            {
+                _scheduler = _factory.GetScheduler();
 
-            await _scheduler.Start();
-            await _scheduler.ScheduleJob(_jobDetail, _trigger);
+                _scheduler.Start();
+                _scheduler.ScheduleJob(_jobDetail, _trigger);
+            }
+            catch (Exception) { }
+
+            return true;
         }
 
-        public async Task Stop()
+        public bool Stop()
         {
-            await _scheduler.Shutdown();
+            if (_scheduler == null)
+            {
+                return true;
+            }
+
+            _scheduler.Shutdown();
+
+            return true;
         }
     }
 }

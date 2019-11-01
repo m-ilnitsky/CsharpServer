@@ -19,16 +19,8 @@ namespace L8_Task1_Job_v2
                     // Topshelf.Quartz (Optional) - Construct service using Ninject
                     s.ConstructUsingNinject();
 
-                    s.WhenStarted((service, control) =>
-                    {
-                        service.Start();
-                        return true;
-                    });
-                    s.WhenStopped((service, control) =>
-                    {
-                        service.Stop();
-                        return true;
-                    });
+                    s.WhenStarted((service, control) => service.Start());
+                    s.WhenStopped((service, control) => service.Stop());
 
                     // Topshelf.Quartz.Ninject (Optional) - Construct IJob instance with Ninject
                     s.UseQuartzNinject();
@@ -36,12 +28,12 @@ namespace L8_Task1_Job_v2
                     // Schedule a job to run in the background every 5 seconds.
                     // The full Quartz Builder framework is available here.
                     s.ScheduleQuartzJob(q =>
-                        q.WithJob(() =>
-                            JobBuilder.Create<HelloJob>().Build())
-                            .AddTrigger(() =>
-                                TriggerBuilder.Create()
-                                    .WithSimpleSchedule(builder => builder.WithIntervalInSeconds(3).RepeatForever()).Build())
-                        );
+                         q.WithJob(() =>
+                             JobBuilder.Create<HelloJob>().Build())
+                             .AddTrigger(() =>
+                                 TriggerBuilder.Create()
+                                     .WithSimpleSchedule(builder => builder.WithIntervalInSeconds(3).RepeatForever()).Build())
+                         );
                 });
             });
         }
