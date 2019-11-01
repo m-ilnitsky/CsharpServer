@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Quartz;
 
 namespace L8_Task1_Job_v1
 {
     public class HelloJob : IJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync("Greetings from HelloJob!");
+            Console.Out.WriteLineAsync("Greetings from HelloJob!");
         }
     }
 }
