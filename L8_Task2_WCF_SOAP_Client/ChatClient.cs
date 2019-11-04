@@ -1,9 +1,6 @@
 ﻿using L8_Task2_WCF_SOAP_Client.ChatService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace L8_Task2_WCF_SOAP_Client
 {
@@ -13,23 +10,27 @@ namespace L8_Task2_WCF_SOAP_Client
         private string userName;
         private string userSecretString;
 
-        public bool SendMessage(string name, string secretString, string message)
+        private T Call<T>(Func<ChatServiceClient, T> f)
         {
             var chatClient = new ChatServiceClient();
 
             try
             {
-                var wasSended = chatClient.SendMessage(name, secretString, message);
+                var result = f(chatClient);
                 chatClient.Close();
 
-                return wasSended;
+                return result;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 chatClient.Abort();
+                throw e;
             }
+        }
 
-            return false;
+        public bool SendMessage(string name, string secretString, string message)
+        {
+            return Call(c => c.SendMessage(name, secretString, message));
         }
 
         public bool SendMessage(string message)
@@ -39,18 +40,8 @@ namespace L8_Task2_WCF_SOAP_Client
 
         public void LoadMessages()
         {
-            var chatClient = new ChatServiceClient();
-
-            try
-            {
-                var lastMessages = chatClient.GetMessages(chatMessages.Count);
-                chatMessages.AddRange(lastMessages);
-                chatClient.Close();
-            }
-            catch (Exception)
-            {
-                chatClient.Abort();
-            }
+            var lastMessages = Call(c => c.GetMessages(chatMessages.Count));
+            chatMessages.AddRange(lastMessages);
         }
 
         public void PrintMessages()
@@ -91,10 +82,10 @@ namespace L8_Task2_WCF_SOAP_Client
         public bool LoginToChat()
         {
             Console.Write("Введите ваше имя: ");
-            string name = Console.ReadLine();
+            var name = Console.ReadLine();
 
             Console.Write("Введите секретную строку для вашей идентификации (придумайте её): ");
-            string secretString = Console.ReadLine();
+            var secretString = Console.ReadLine();
 
             var isLogin = SendMessage(name, secretString, "Привет!");
 
@@ -109,7 +100,7 @@ namespace L8_Task2_WCF_SOAP_Client
 
         public void Run()
         {
-            bool isRunning = true;
+            var isRunning = true;
 
             while (isRunning)
             {
@@ -129,7 +120,6 @@ namespace L8_Task2_WCF_SOAP_Client
                     else if (command == "exit")
                     {
                         isRunning = false;
-                        Console.WriteLine("Всего доброго!");
                     }
                 }
                 else
@@ -139,7 +129,6 @@ namespace L8_Task2_WCF_SOAP_Client
                     if (message == "exit")
                     {
                         isRunning = false;
-                        Console.WriteLine("Всего доброго!");
                     }
                     else if (message != "")
                     {
@@ -148,6 +137,7 @@ namespace L8_Task2_WCF_SOAP_Client
                 }
             }
 
+            Console.WriteLine("Всего доброго!");
             Console.ReadKey();
         }
     }

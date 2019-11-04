@@ -9,7 +9,7 @@ namespace L8_Task2_WCF_SOAP_Service
         private static Dictionary<string, UserData> users = new Dictionary<string, UserData>();
         private static List<ChatMessage> messages = new List<ChatMessage>();
 
-        public ChatService() : base()
+        public ChatService()
         {
             if (messages.Count == 0)
             {
@@ -17,7 +17,7 @@ namespace L8_Task2_WCF_SOAP_Service
             }
         }
 
-        private void AddMessage(string name, string message)
+        private static void AddMessage(string name, string message)
         {
             messages.Add(new ChatMessage
             {
@@ -28,7 +28,7 @@ namespace L8_Task2_WCF_SOAP_Service
             });
         }
 
-        private void AddSystemMessage(string message)
+        private static void AddSystemMessage(string message)
         {
             AddMessage("System", message);
         }

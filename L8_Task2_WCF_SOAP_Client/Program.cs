@@ -1,6 +1,4 @@
-﻿using L8_Task2_WCF_SOAP_Client.ChatService;
-
-namespace L8_Task2_WCF_SOAP_Client
+﻿namespace L8_Task2_WCF_SOAP_Client
 {
     class Program
     {

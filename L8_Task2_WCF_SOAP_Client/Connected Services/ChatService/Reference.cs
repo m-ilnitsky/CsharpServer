@@ -8,161 +8,192 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace L8_Task2_WCF_SOAP_Client.ChatService {
-    using System.Runtime.Serialization;
-    using System;
-    
-    
+namespace L8_Task2_WCF_SOAP_Client.ChatService
+{
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ChatMessage", Namespace="http://schemas.datacontract.org/2004/07/L8_Task2_WCF_SOAP_Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "ChatMessage", Namespace = "http://schemas.datacontract.org/2004/07/L8_Task2_WCF_SOAP_Service")]
     [System.SerializableAttribute()]
-    public partial class ChatMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
+    public partial class ChatMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+    {
+
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
+
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateField;
-        
+
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageField;
-        
+
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
-        
+
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int NumberField;
-        
+
         [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData
+        {
+            get
+            {
                 return this.extensionDataField;
             }
-            set {
+            set
+            {
                 this.extensionDataField = value;
             }
         }
-        
+
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Date {
-            get {
+        public System.DateTime Date
+        {
+            get
+            {
                 return this.DateField;
             }
-            set {
-                if ((this.DateField.Equals(value) != true)) {
+            set
+            {
+                if ((this.DateField.Equals(value) != true))
+                {
                     this.DateField = value;
                     this.RaisePropertyChanged("Date");
                 }
             }
         }
-        
+
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
+        public string Message
+        {
+            get
+            {
                 return this.MessageField;
             }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+            set
+            {
+                if ((object.ReferenceEquals(this.MessageField, value) != true))
+                {
                     this.MessageField = value;
                     this.RaisePropertyChanged("Message");
                 }
             }
         }
-        
+
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
+        public string Name
+        {
+            get
+            {
                 return this.NameField;
             }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+            set
+            {
+                if ((object.ReferenceEquals(this.NameField, value) != true))
+                {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
                 }
             }
         }
-        
+
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Number {
-            get {
+        public int Number
+        {
+            get
+            {
                 return this.NumberField;
             }
-            set {
-                if ((this.NumberField.Equals(value) != true)) {
+            set
+            {
+                if ((this.NumberField.Equals(value) != true))
+                {
                     this.NumberField = value;
                     this.RaisePropertyChanged("Number");
                 }
             }
         }
-        
+
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
+            if ((propertyChanged != null))
+            {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ChatService.IChatService")]
-    public interface IChatService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendMessage", ReplyAction="http://tempuri.org/IChatService/SendMessageResponse")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName = "ChatService.IChatService")]
+    public interface IChatService
+    {
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IChatService/SendMessage", ReplyAction = "http://tempuri.org/IChatService/SendMessageResponse")]
         bool SendMessage(string name, string secretString, string message);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendMessage", ReplyAction="http://tempuri.org/IChatService/SendMessageResponse")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IChatService/SendMessage", ReplyAction = "http://tempuri.org/IChatService/SendMessageResponse")]
         System.Threading.Tasks.Task<bool> SendMessageAsync(string name, string secretString, string message);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetMessages", ReplyAction="http://tempuri.org/IChatService/GetMessagesResponse")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IChatService/GetMessages", ReplyAction = "http://tempuri.org/IChatService/GetMessagesResponse")]
         L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[] GetMessages(int startMessageNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetMessages", ReplyAction="http://tempuri.org/IChatService/GetMessagesResponse")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IChatService/GetMessages", ReplyAction = "http://tempuri.org/IChatService/GetMessagesResponse")]
         System.Threading.Tasks.Task<L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[]> GetMessagesAsync(int startMessageNumber);
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IChatServiceChannel : L8_Task2_WCF_SOAP_Client.ChatService.IChatService, System.ServiceModel.IClientChannel {
+    public interface IChatServiceChannel : L8_Task2_WCF_SOAP_Client.ChatService.IChatService, System.ServiceModel.IClientChannel
+    {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ChatServiceClient : System.ServiceModel.ClientBase<L8_Task2_WCF_SOAP_Client.ChatService.IChatService>, L8_Task2_WCF_SOAP_Client.ChatService.IChatService {
-        
-        public ChatServiceClient() {
+    public partial class ChatServiceClient : System.ServiceModel.ClientBase<L8_Task2_WCF_SOAP_Client.ChatService.IChatService>, L8_Task2_WCF_SOAP_Client.ChatService.IChatService
+    {
+
+        public ChatServiceClient()
+        {
         }
-        
-        public ChatServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+
+        public ChatServiceClient(string endpointConfigurationName) :
+                base(endpointConfigurationName)
+        {
         }
-        
-        public ChatServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+
+        public ChatServiceClient(string endpointConfigurationName, string remoteAddress) :
+                base(endpointConfigurationName, remoteAddress)
+        {
         }
-        
-        public ChatServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+
+        public ChatServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) :
+                base(endpointConfigurationName, remoteAddress)
+        {
         }
-        
-        public ChatServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+
+        public ChatServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
+                base(binding, remoteAddress)
+        {
         }
-        
-        public bool SendMessage(string name, string secretString, string message) {
+
+        public bool SendMessage(string name, string secretString, string message)
+        {
             return base.Channel.SendMessage(name, secretString, message);
         }
-        
-        public System.Threading.Tasks.Task<bool> SendMessageAsync(string name, string secretString, string message) {
+
+        public System.Threading.Tasks.Task<bool> SendMessageAsync(string name, string secretString, string message)
+        {
             return base.Channel.SendMessageAsync(name, secretString, message);
         }
-        
-        public L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[] GetMessages(int startMessageNumber) {
+
+        public L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[] GetMessages(int startMessageNumber)
+        {
             return base.Channel.GetMessages(startMessageNumber);
         }
-        
-        public System.Threading.Tasks.Task<L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[]> GetMessagesAsync(int startMessageNumber) {
+
+        public System.Threading.Tasks.Task<L8_Task2_WCF_SOAP_Client.ChatService.ChatMessage[]> GetMessagesAsync(int startMessageNumber)
+        {
             return base.Channel.GetMessagesAsync(startMessageNumber);
         }
     }
