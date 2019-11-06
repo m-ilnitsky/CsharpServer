@@ -20,12 +20,12 @@ namespace L8_Task1_Job_v3
 
                     s.WhenStarted((service, control) =>
                     {
-                        service.Start();
+                        service.Start().Wait();
                         return true;
                     });
                     s.WhenStopped((service, control) =>
                     {
-                        service.Stop();
+                        service.Stop().Wait();
                         return true;
                     });
                 });
