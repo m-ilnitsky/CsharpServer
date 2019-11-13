@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_HandlingConcurrencyCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_HandlingConcurrencyConflicts_MsSql", "Test_HandlingConcurrencyConflicts_MsSql\Test_HandlingConcurrencyConflicts_MsSql.csproj", "{7E441D02-DEBF-4350-9204-1C1BAE34D82E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L9_Task1_WCF_Conifg_Service", "L9_Task1_WCF_Conifg_Service\L9_Task1_WCF_Conifg_Service.csproj", "{C40B357C-1432-4362-AB16-41F31176CA0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L9_Task1_WCF_Conifg_Client", "L9_Task1_WCF_Conifg_Client\L9_Task1_WCF_Conifg_Client.csproj", "{8C5C956C-A35F-4258-949E-B217F4E316A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +94,14 @@ Global
 		{7E441D02-DEBF-4350-9204-1C1BAE34D82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E441D02-DEBF-4350-9204-1C1BAE34D82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E441D02-DEBF-4350-9204-1C1BAE34D82E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40B357C-1432-4362-AB16-41F31176CA0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40B357C-1432-4362-AB16-41F31176CA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40B357C-1432-4362-AB16-41F31176CA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40B357C-1432-4362-AB16-41F31176CA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C5C956C-A35F-4258-949E-B217F4E316A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5C956C-A35F-4258-949E-B217F4E316A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5C956C-A35F-4258-949E-B217F4E316A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5C956C-A35F-4258-949E-B217F4E316A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

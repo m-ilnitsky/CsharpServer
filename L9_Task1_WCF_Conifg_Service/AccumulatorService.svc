@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="L9_Task1_WCF_Conifg_Service.AccumulatorService" CodeBehind="AccumulatorService.svc.cs" %>
