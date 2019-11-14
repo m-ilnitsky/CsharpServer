@@ -13,7 +13,7 @@ namespace Test_HandlingConcurrencyConflicts
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
             optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseMySql("Server=Mysql@localhost:3306; Database=ConcurrencyConflicts; Uid=root; Pwd=1234;",
+                .UseMySql("Server=localhost;Database=ConcurrencyConflicts;User=root;Password=1234;",
                     mySqlOptions =>
                 {
                     //TODO maybe use MariaDB?

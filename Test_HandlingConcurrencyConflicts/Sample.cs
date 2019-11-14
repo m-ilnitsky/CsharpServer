@@ -24,11 +24,11 @@ namespace Test_HandlingConcurrencyConflicts
             {
                 // Fetch a person from database and change phone number
                 var person = context.People.Single(p => p.PersonId == 1);
-                person.PhoneNumber = "555-555-5555";
+                person.PhoneNumber = "555-555-7777";
 
                 // Change the person's name in the database to simulate a concurrency conflict
-                context.Database.ExecuteSqlRaw(
-                    "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
+                context.Database.ExecuteSqlCommand(
+                    "UPDATE People SET FirstName = 'Jane' WHERE PersonId = 1");
 
                 var saved = false;
                 while (!saved)
@@ -54,7 +54,14 @@ namespace Test_HandlingConcurrencyConflicts
                                     var databaseValue = databaseValues[property];
 
                                     // TODO: decide which value should be written to database
-                                    // proposedValues[property] = <value to be saved>;
+                                    if (property.Name == "PhoneNumber")
+                                    {
+                                        proposedValues[property] = proposedValue;
+                                    }
+                                    else
+                                    {
+                                        proposedValues[property] = databaseValue;
+                                    }
                                 }
 
                                 // Refresh original values to bypass next concurrency check
