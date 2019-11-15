@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Test_HandlingConcurrencyConflicts
+﻿namespace Test_HandlingConcurrencyConflicts
 {
-    class File
+    public class File
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Content { get; set; }
+
+        public int MessageId { get; set; }
+
+        public virtual Message Message { get; set; }
     }
 }
