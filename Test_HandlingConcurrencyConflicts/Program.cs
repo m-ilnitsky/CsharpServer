@@ -40,22 +40,28 @@ namespace Test_HandlingConcurrencyConflicts
 
             using (var context = new PersonContext())
             {
-                var thread = context.Threads.Single(p => p.Id == 1);
-                var message = new Message
+                var thread1 = context.Threads.Single(p => p.Id == 1);
+                var newMessage = new Message
                 {
-                    Text = "Смотри!",
+                    Text = "Вот!",
                     IsIncoming = true,
-                    Thread = thread
+                    Thread = thread1
                 };
-                var file = new File
+                var newFile1 = new File
                 {
                     Name = "wau.ch",
-                    Message = message
+                    Message = newMessage
+                };
+                var newFile2 = new File
+                {
+                    Name = "wau.js",
+                    Message = newMessage
                 };
 
-                context.Messages.Add(message);
-                context.Files.Add(file);
-                thread.Status = 1;
+                context.Messages.Add(newMessage);
+                context.Files.Add(newFile1);
+                context.Files.Add(newFile2);
+                thread1.Status = 1;
 
 
                 /*context.Database.ExecuteSqlCommand(
@@ -79,25 +85,21 @@ namespace Test_HandlingConcurrencyConflicts
                         {
                             if (entry.Entity is Thread)
                             {
-                                entry.State = EntityState.Detached;
+                                var thread = (Thread)entry.Entity;
 
-                                //TODO заигнорить новые Message и File
-
-                                /*var proposedValues = entry.CurrentValues;
-                                var databaseValues = entry.GetDatabaseValues();
-
-                                foreach (var property in proposedValues.Properties)
+                                foreach (var message in thread.Messages)
                                 {
-                                    var proposedValue = proposedValues[property];
-                                    var databaseValue = databaseValues[property];
+                                    foreach (var file in message.Files)
+                                    {
+                                        context.Entry(file).State = EntityState.Detached;
+                                    }
 
-                                    // TODO: decide which value should be written to database
-
-                                    proposedValues[property] = databaseValue;
+                                    context.Entry(message).State = EntityState.Detached;
                                 }
 
-                                // Refresh original values to bypass next concurrency check
-                                entry.OriginalValues.SetValues(databaseValues);*/
+                                entry.State = EntityState.Detached;
+
+                                entry.OriginalValues.SetValues(entry.GetDatabaseValues());
                             }
                             else
                             {
