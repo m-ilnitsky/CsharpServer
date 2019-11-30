@@ -24,7 +24,7 @@ namespace L8_Task2_WCF_SOAP_Client
             catch (Exception e)
             {
                 chatClient.Abort();
-                throw e;
+                throw;
             }
         }
 

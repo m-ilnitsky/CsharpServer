@@ -6,8 +6,8 @@ namespace L8_Task2_WCF_SOAP_Service
 {
     public class ChatService : IChatService
     {
-        private static Dictionary<string, UserData> users = new Dictionary<string, UserData>();
-        private static List<ChatMessage> messages = new List<ChatMessage>();
+        private static readonly Dictionary<string, UserData> users = new Dictionary<string, UserData>();
+        private static readonly List<ChatMessage> messages = new List<ChatMessage>();
 
         public ChatService()
         {
