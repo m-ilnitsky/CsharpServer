@@ -38,7 +38,7 @@ namespace L3_Task2_Transaction
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Пара операций [ {0}, {1} ] прервалась!", category1Name, category2Name);
             }
@@ -72,7 +72,7 @@ namespace L3_Task2_Transaction
 
                 Console.WriteLine("Транзакция [ {0}, {1} ] прошла!", category1Name, category2Name);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
                 Console.WriteLine("Транзакция [ {0}, {1} ] откатилась!", category1Name, category2Name);

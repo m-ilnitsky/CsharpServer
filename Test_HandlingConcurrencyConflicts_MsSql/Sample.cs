@@ -7,7 +7,7 @@ namespace Test_HandlingConcurrencyConflicts_MsSql
     public class Sample
     {
         public static void Run()
-        {
+        {/*
             // Ensure database is created and has a person in it
             using (var context = new PersonContext())
             {
@@ -70,6 +70,7 @@ namespace Test_HandlingConcurrencyConflicts_MsSql
                 }
             }
             # endregion
+        */
         }
     }
 }

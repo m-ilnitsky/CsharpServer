@@ -138,7 +138,7 @@ namespace L5_Task2_UnitOfWork
                     productRepository.Delete(removingProduct3);
                     categoryRepository.Delete(removingCategory);
 
-                    throw new Exception("Прервём транзакцию перед Save!");
+                    //throw new Exception("Прервём транзакцию перед Save!");
 
                     uow.Save();
 

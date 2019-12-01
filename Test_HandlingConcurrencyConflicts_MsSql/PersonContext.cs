@@ -1,11 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-
-
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Test_HandlingConcurrencyConflicts_MsSql
 {
@@ -16,8 +9,8 @@ namespace Test_HandlingConcurrencyConflicts_MsSql
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
+            //optionsBuilder.UseSqlServer(
+            //    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 }
