@@ -31,21 +31,9 @@ namespace L2_Task4
                             Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
                         }
                     }
-                    catch (Exception exc)
+                    catch (Exception e)
                     {
-                        var exceptions = new LinkedList<Exception>();
-                        Exception innerException = exc;
-
-                        while (innerException != null)
-                        {
-                            exceptions.AddFirst(innerException);
-                            innerException = innerException.InnerException;
-                        }
-
-                        foreach (var e in exceptions)
-                        {
-                            Logger.Error($"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}", e);
-                        }
+                        Logger.Error($"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}", e);
                     }
                 }
             }
