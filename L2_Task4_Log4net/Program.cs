@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using log4net;
 using log4net.Config;
 
@@ -6,7 +7,7 @@ namespace L2_Task4
 {
     class Program
     {
-        private static readonly ILog Logger = LogManager.GetLogger("LOGGER");
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
 
         static void Main(string[] args)
         {
@@ -30,9 +31,21 @@ namespace L2_Task4
                             Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception exc)
                     {
-                        Logger.Error($"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}");
+                        var exceptions = new LinkedList<Exception>();
+                        Exception innerException = exc;
+
+                        while (innerException != null)
+                        {
+                            exceptions.AddFirst(innerException);
+                            innerException = innerException.InnerException;
+                        }
+
+                        foreach (var e in exceptions)
+                        {
+                            Logger.Error($"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}", e);
+                        }
                     }
                 }
             }
