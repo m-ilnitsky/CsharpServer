@@ -24,11 +24,25 @@ namespace L2_Task4
                 {
                     try
                     {
-                        var greatestCommonDivisor = Euclid.GetGreatestCommonDivisor(i, j);
-
-                        if (greatestCommonDivisor != 1)
+                        try
                         {
-                            Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
+                            try
+                            {
+                                var greatestCommonDivisor = Euclid.GetGreatestCommonDivisor(i, j);
+
+                                if (greatestCommonDivisor != 1)
+                                {
+                                    Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception("2-е исключение-обёртка!", e);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("3-е исключение-обёртка!", e);
                         }
                     }
                     catch (Exception e)

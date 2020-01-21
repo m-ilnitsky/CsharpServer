@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NLog;
 
 namespace L2_Task4
@@ -21,28 +20,30 @@ namespace L2_Task4
                 {
                     try
                     {
-                        var greatestCommonDivisor = Euclid.GetGreatestCommonDivisor(i, j);
-
-                        if (greatestCommonDivisor != 1)
+                        try
                         {
-                            Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
+                            try
+                            {
+                                var greatestCommonDivisor = Euclid.GetGreatestCommonDivisor(i, j);
+
+                                if (greatestCommonDivisor != 1)
+                                {
+                                    Logger.Info($"НОД({i}, {j}) = {greatestCommonDivisor}");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception("2-е исключение-обёртка!", e);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("3-е исключение-обёртка!", e);
                         }
                     }
-                    catch (Exception exc)
+                    catch (Exception e)
                     {
-                        var exceptions = new LinkedList<Exception>();
-                        Exception innerException = exc;
-
-                        while (innerException != null)
-                        {
-                            exceptions.AddFirst(innerException);
-                            innerException = innerException.InnerException;
-                        }
-
-                        foreach (var e in exceptions)
-                        {
-                            Logger.Error(e, $"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}\nStackTrace:\n{e.StackTrace}");
-                        }
+                        Logger.Error(e, $"Для чисел {i} и {j} возникло исключение в функции Euclid.GetGreatestCommonDivisor: {e.Message}");
                     }
                 }
             }
